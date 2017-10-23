@@ -30,11 +30,13 @@ int main(int argc, char** argv){
 }
 
 int start(char* mode, char* client, char* keyfiles, char* directory){
+    pthread_t *main;
     //create_folder(directory);
     //check_keys(keyfiles);
-    if(strcmp(client, CLI_CLIENT) == 0) create_thread(t_cli);
+
+    if(strcmp(client, CLI_CLIENT) == 0) main = create_thread(t_cli);
     if(strcmp(mode, SERVER_MODE) == 0)  create_thread(t_server);
     if(strcmp(mode, CLIENT_MODE) == 0)  create_thread(t_client);
-    while(1);
+    pthread_join(*main, NULL);
     return 0;
 }
