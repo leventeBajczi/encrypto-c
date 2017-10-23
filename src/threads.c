@@ -5,6 +5,7 @@ char** miso;
 
 pthread_t handles[5];
 short count = 0;
+char* input; 
 
 pthread_t* create_thread(void* thread){
     pthread_create(&(handles[count]), NULL, thread, NULL);
@@ -12,24 +13,31 @@ pthread_t* create_thread(void* thread){
 }
 
 void *t_cli(void* params){
+    setbuf(stdout, NULL); //to write out everything immediately
     allocate_str_array(&mosi, SIZE, MAX_SIZE);
     allocate_str_array(&miso, SIZE, MAX_SIZE);
     create_thread(t_cli_input); //Catch any inputs
     char* out = (char*)malloc(sizeof(char)*MAX_SIZE);
     while(1){
         if(read_comm(&miso, out)){
-            printf("\n%s\n\n", out);
+            printf("\0337\033[2A\r\033[KYou:\t\t%s\n\0338", out);
+            printf("\0337\033[1A\r\033[K%s\n\0338", EMPTYLINE);
         }
     }
 }
 
 
 void *t_cli_input(void* params){
-    
-    char* input = (char*)malloc(sizeof(char)*MAX_SIZE);
+    input = (char*)malloc(sizeof(char)*MAX_SIZE);
+    for(int j = 0; j<MAX_SIZE; j++)input[j] = '\0';
+    int i = 0;
     while(1){
-        scanf("%s", input);
+        while('\n' != (input[i] = getchar())) i++;
+        input[i] = '\0';
+        
         write_comm(&miso, input);
+        for(int j = 0; j<=i; j++)input[j] = '\0';
+        i = 0;
     }
 }
 
@@ -38,7 +46,12 @@ void *t_server(void* params){
 }
 
 void *t_client(void* params){
-    
+    char* helper = (char*)malloc(sizeof(char)*MAX_SIZE);
+    while(1){
+        sleep(2);
+        strcpy(helper, input);
+        printf("\0337\033[1A\rNot you:\t%sasdasd\0338\r%s\n", helper, EMPTYLINE);    //TODO: why doesnt it have the correct value..? 
+    }
 }
 
 void write_comm(char*** ch, char* in){

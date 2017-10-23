@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <pthread.h>
+#include <unistd.h>
 #include "memory.h"
 
 #define SIZE 16         //max size of communication between the master and the slave
