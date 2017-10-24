@@ -8,6 +8,14 @@ void allocate_str_array(char*** array, int size, int piece_size){
     }
     return;
 }
+
+void free_str_array(char*** array, int size){
+    for(int i = 0; i<size; i++){
+        free((*array)[i]);
+    }
+    free(*array);
+}
+
 void shift(char*** array, int size){
     for(int i = size-1; i>0; i--) strcpy((*array)[i], (*array)[i-1]);
     strcpy((*array)[0], ""); 

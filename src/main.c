@@ -1,6 +1,7 @@
 #include "main.h"
 
 
+
 int main(int argc, char** argv){
     int i = 0;
     char* mode      = DEFAULT_MODE;
@@ -31,12 +32,12 @@ int main(int argc, char** argv){
 
 int start(char* mode, char* client, char* keyfiles, char* directory){
     pthread_t *main;
-    //create_folder(directory);
-    //check_keys(keyfiles);
-
+    //client mode
     if(strcmp(client, CLI_CLIENT) == 0) main = create_thread(t_cli);
+
+    //role mode
     if(strcmp(mode, SERVER_MODE) == 0)  create_thread(t_server);
-    if(strcmp(mode, CLIENT_MODE) == 0)  create_thread(t_client);
+    else if(strcmp(mode, CLIENT_MODE) == 0)  create_thread(t_client);
     pthread_join(*main, NULL);
     return 0;
 }

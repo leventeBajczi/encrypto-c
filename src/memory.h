@@ -5,5 +5,6 @@
 #include <string.h>
 
 void allocate_str_array(char***, int, int);
+void free_str_array(char***, int);
 void shift(char***, int);
 #endif
