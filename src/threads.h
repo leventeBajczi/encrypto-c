@@ -4,8 +4,9 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
-#include "stdint.h"
+#include <stdint.h>
 #include "memory.h"
+#include "networking.h"
 
 #define SIZE 16         //max size of communication between the master and the slave
 #define MAX_SIZE 512    //max size of each message between the master and the slave

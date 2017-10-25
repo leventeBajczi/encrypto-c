@@ -54,11 +54,11 @@ void *t_cli_input(void* params){
 }
 
 void *t_server(void* params){
-    
+    init_server();
 }
 
 void *t_client(void* params){
-
+    
 }
 
 void write_comm(char*** ch, char* in){
