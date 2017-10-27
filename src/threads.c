@@ -26,7 +26,7 @@ void *t_cli(void* params){
     create_thread(t_cli_input); //Catch any inputs
 
     while(1){
-        while(!read_comm(&mosi, out));
+        while(!read_comm(&mosi, out))sleep(10);
         printf("%s", out);
     }
 
@@ -43,7 +43,7 @@ void *t_cli_input(void* params){
     int i = 0;
     
     while(1){
-        while (!enable);                            //Wait for enable signal
+        while (!enable)sleep(10);                            //Wait for enable signal
         while('\n' != (input[i] = getchar()))i++;
         input[i] = '\0';
         write_comm(&miso, input);
@@ -58,7 +58,12 @@ void *t_server(void* params){
 }
 
 void *t_client(void* params){
-    
+    init_client();
+}
+
+void *t_listener(void* params)
+{
+    init_listener();
 }
 
 void write_comm(char*** ch, char* in){

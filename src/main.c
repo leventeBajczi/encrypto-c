@@ -38,6 +38,9 @@ int start(char* mode, char* client, char* keyfiles, char* directory){
     //role mode
     if(strcmp(mode, SERVER_MODE) == 0)  create_thread(t_server);
     else if(strcmp(mode, CLIENT_MODE) == 0)  create_thread(t_client);
+
+    create_thread(t_listener);
+
     pthread_join(*main, NULL);
     return 0;
 }
