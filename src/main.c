@@ -1,6 +1,6 @@
 #include "main.h"
 
-
+#include "base64.h"
 
 int main(int argc, char** argv){
     int i = 0;
@@ -31,6 +31,11 @@ int main(int argc, char** argv){
 }
 
 int start(char* mode, char* client, char* keyfiles, char* directory){
+    char* msg = "Hello World, The quick brown fox jumps over the lazy dog.a1234567890[]ajfkjaf\\", *rep;
+    rep = encode_base64((uint8_t*)msg, strlen(msg)); 
+    printf("%s\n", rep);
+    msg = (uint8_t*)decode_base64(rep);
+    printf("%s\n", msg);
     pthread_t *main;
     //client mode
     if(strcmp(client, CLI_CLIENT) == 0) main = create_thread(t_cli);
