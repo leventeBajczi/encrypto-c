@@ -1,6 +1,9 @@
 #include "main.h"
 
-#include "bigint.h"
+char** n_mosi;
+char** n_miso;
+char** i_mosi;
+char** i_miso;
 
 int main(int argc, char** argv){
     int i = 0;
@@ -31,17 +34,17 @@ int main(int argc, char** argv){
 }
 
 int start(char* mode, char* client, char* keyfiles, char* directory){
-    printf("%llu", pow_modulo(343597387, 643597388, 943597388));
-    pthread_t *main;
-    //client mode
-    if(strcmp(client, CLI_CLIENT) == 0) main = create_thread(t_cli);
+    allocate_str_array(&n_mosi, SIZE, MAX_SIZE);
+    allocate_str_array(&n_miso, SIZE, MAX_SIZE);
+    allocate_str_array(&i_mosi, SIZE, MAX_SIZE);
+    allocate_str_array(&i_miso, SIZE, MAX_SIZE);
 
-    //role mode
-    if(strcmp(mode, SERVER_MODE) == 0)  create_thread(t_server);
-    else if(strcmp(mode, CLIENT_MODE) == 0)  create_thread(t_client);
-
-    create_thread(t_listener);
-
-    pthread_join(*main, NULL);
+    networking(mode);
+    interfaces(client);
+    
+    free_str_array(&n_mosi, SIZE);
+    free_str_array(&n_miso, SIZE);
+    free_str_array(&i_mosi, SIZE);
+    free_str_array(&i_miso, SIZE);
     return 0;
 }

@@ -1,4 +1,4 @@
-#include "base64.h"
+#include "headers/base64.h"
 
 char* encode_base64(uint8_t* str, int len){
     char* base64;
@@ -45,7 +45,7 @@ char to_base64_char(uint8_t c)      //A....Z, a....z, 0....9, +, /
 
 
 uint8_t* decode_base64(char* base64){
-    uint8_t* chars = (uint8_t*)malloc(sizeof(uint8_t)*strlen(base64)*6/8);  //We know that it has 4k chars
+    uint8_t* chars = (uint8_t*)malloc(sizeof(uint8_t)*strlen(base64)*6/8);  //We know that it has 4k chars, so it'll be an integer
     for(int i = 0; i<strlen(base64); i+=4)
     {
         chars[i*6/8] = get_char(base64[i])<<2 | get_char(base64[i+1]) >> 4;

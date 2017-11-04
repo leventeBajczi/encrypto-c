@@ -1,4 +1,4 @@
-#include "memory.h"
+#include "headers/memory.h"
 
 void allocate_str_array(char*** array, int size, int piece_size){
     *array = (char**)malloc(sizeof(char*)*size);
