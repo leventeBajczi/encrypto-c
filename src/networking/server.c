@@ -28,7 +28,7 @@ void* server(void* params)
             if((len = recv(socket_handle, buffer, MAX_ANSWER_SIZE, 0)) > 0)
             {
                 buffer[len] = '\0';     //Null terminate, whatever happens (lost connection e.g.)
-                handle_input(buffer);
+                s_handle_input(buffer);
             }
         }
         close(consocket);
@@ -38,7 +38,7 @@ void* server(void* params)
 
 }
 
-void handle_input(char* in)
+void s_handle_input(char* in)
 {
     in = get_http(in);
     write_comm(&n_miso, in);        //We do not want to directly communicate with the interface, let the main thread take care of that

@@ -12,6 +12,9 @@
 
 #include "../../misomosi/headers/misomosi.h"
 
+#include "../../text/headers/http.h"
+
+
 #define PORTNUM 1111
 #define MAX_ANSWER_SIZE 3584    //3.5kiB for the body
 #define MAX_RESPONSE_SIZE 4096  //4kiB for the entire message
