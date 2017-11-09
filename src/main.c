@@ -1,11 +1,15 @@
 #include "main.h"
 
+#include "text/RSA/headers/rsa.h"
+
 char** n_mosi;
 char** n_miso;
 char** i_mosi;
 char** i_miso;
 
 int main(int argc, char** argv){
+    init_crypto();
+    gen_keys(2048);
     int i = 0;
     char* mode      = DEFAULT_MODE;
     char* client    = DEFAULT_CLIENT;
