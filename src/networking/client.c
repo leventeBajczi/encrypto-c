@@ -41,11 +41,8 @@ void* client(void* params)
 
 void handle_output(char* out)
 {
-    char* str = malloc(sizeof(char)*MAX_RESPONSE_SIZE);
-    strcpy(str, out);
-    build_http(str);
-    send(mysocket, str, strlen(str), 0);
-    free(str);
+    build_http(HEADER, out);
+    send(mysocket, out, strlen(out), 0);
 }
 
 void handle_input(char* in)
