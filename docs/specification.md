@@ -22,7 +22,7 @@ Diese Parameter sind:
         * Verschlüsselung ist jezt nur auf RSA und AES-256 basiert (RSA für Initialisierung, dann eine Session-AES-key generieren für Kommunikation, und AES für die Verschlüsselung der Geheimschlüsseln auf dem Disk.) Diese Operationen sind von der Entwickler dieses Programmes auch implementiert, also sind nicht sicher, und sollten jetzt nicht in Produktion benutzt werden! (Eine libgcrypt oder openSSL Implementation ist geplannt.)
         * Interfacemöglichkeiten sind im Punkt 2 erklärt.
 2. Client - Die User-Interface
-    * `cli`: CLI-basierte - in dem passenden Terminal laufen lassen, Eingänge aus dem Drücktaste direkt einlesen und Ausgänge direkt zu dem Terminal ausschreiben.
+    * `cli`: CLI-basierte - in dem passenden Terminal laufen lassen, Eingänge aus dem Tastatur direkt einlesen und Ausgänge direkt zu dem Terminal ausschreiben.
     * `gui-gtk`: GTK+-basierte - Native-aussehende Widget Toolkit benutzen, darin verschiedene Elementen für Einlesen und Ausschreiben benutzen.
 3. Directory
     * `path/to/directory/`: Die Folder, in dem die verschidene Daten gespeichert werden.
