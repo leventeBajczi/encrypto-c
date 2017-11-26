@@ -8,5 +8,5 @@
 
 #define MAX_THREADS 5   //Maximum number of threads this program is able to handle - no problem if bigger than actually needed
 
-pthread_t* create_thread(void*);
+pthread_t* create_thread(void*, void*);
 #endif

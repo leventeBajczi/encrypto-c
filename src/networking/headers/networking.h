@@ -11,5 +11,6 @@
 #define SERVER_MODE         "server"
 
 void networking(char*);
+void* router(void*);
 
 #endif

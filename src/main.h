@@ -16,14 +16,13 @@
 #define CLIENT_SWITCH       "-c"
 #define KEYS_SWITCH         "-k"
 #define DIRECTORY_SWITCH    "-d"
+#define SERVER_SWITCH       "-s"
 
 #define DEFAULT_MODE        "client"
 #define DEFAULT_CLIENT      "cli"
 #define DEFAULT_KEYS        "./"
 #define DEFAULT_DIRECTORY   "./messages"
-
-#define CLI_CLIENT          "cli"
-
+#define DEFAULT_SERVER      "127.0.0.1"
 
 #define SIZE 16         //max size of communication between the master and the slave
 #define MAX_SIZE 512    //max size of each message between the master and the slave

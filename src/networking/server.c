@@ -1,46 +1,72 @@
 #include "headers/server.h"
 
 extern char** n_miso;
+extern char** c_mosi;
+
+int *sockets;
+int socketnumber = 0;
 
 void* server(void* params)
 {
-    char buffer[MAX_ANSWER_SIZE+1]; //+1 for \0
-    struct sockaddr_in client, server; //socket info about the client and the server
-    int socket_handle, len;
+    int socket_dest , client_sock , c;
+    struct sockaddr_in sockserver , client;
+    sockets = (int*)malloc(sizeof(int)*CONCURR_CLIENTS);
+     
+    socket_dest = socket(AF_INET , SOCK_STREAM , 0);
 
-    socklen_t socksize = sizeof(struct sockaddr_in);
-    int consocket;
+    sockserver.sin_family = AF_INET;
+    sockserver.sin_addr.s_addr = INADDR_ANY;
+    sockserver.sin_port = htons(PORTNUM);
+    create_thread(callback, NULL);
+    while(1){    
+        bind(socket_dest,(struct sockaddr *)&sockserver , sizeof(sockserver));
 
-    memset(&server, 0, sizeof(server));          
-    server.sin_family = AF_INET;                
-    server.sin_addr.s_addr = htonl(INADDR_ANY); 
-    server.sin_port = htons(PORTNUM);
+        listen(socket_dest , 1);
+        
+        c = sizeof(struct sockaddr_in);
+        
+        client_sock = accept(socket_dest, (struct sockaddr *)&client, (socklen_t*)&c);
+        
+        create_thread(serverread, (void*)&client_sock);
+        
+    }     
 
-    socket_handle = socket(AF_INET, SOCK_STREAM, 0);
+}
 
-    bind(socket_handle, (struct sockaddr *)&server, sizeof(struct sockaddr));
-    listen(socket_handle, 1);
-    consocket = accept(socket_handle, (struct sockaddr *)&client, &socksize);
-  
-    while(consocket)
+void* serverread(void* params)
+{
+    int read_size;
+    int socket = ((int*)params)[0];
+    char client_message[MAX_RESPONSE_SIZE];
+    sockets[socketnumber] = socket;
+    socketnumber++;
+    while(1)
     {
-        while(1){
-            if((len = recv(socket_handle, buffer, MAX_ANSWER_SIZE, 0)) > 0)
-            {
-                buffer[len] = '\0';     //Null terminate, whatever happens (lost connection e.g.)
-                s_handle_input(buffer);
-            }
-        }
-        close(consocket);
-        consocket = accept(socket_handle, (struct sockaddr *)&client, &socksize);
+            read_size = recv(socket, client_message , MAX_RESPONSE_SIZE , 0);
+            client_message[read_size] = '\0';
+            s_handle_input(client_message);
     }
-    close(consocket);
-
 }
 
 void s_handle_input(char* in)
 {
     in = get_http(in);
     write_comm(&n_miso, in);        //We do not want to directly communicate with the interface, let the main thread take care of that
-    //TODO: send to all other clients currently connected 
+    write_comm(&c_mosi, in);
+}
+
+void* callback(void* params)
+{
+    char *msg = (char*)malloc(sizeof(char)*MAX_ANSWER_SIZE);
+
+    while(1)
+    {
+        if(read_comm(&c_mosi, msg))
+        {
+            for(int i = 0; i<socketnumber; i++)
+            {
+                send(sockets[i], msg, strlen(msg), 0);
+            }
+        }
+    }
 }

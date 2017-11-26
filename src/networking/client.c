@@ -1,48 +1,52 @@
 #include "headers/client.h"
 
 extern char** n_miso;
-extern char** n_mosi;   
+extern char** n_mosi;
+extern char* serverip;
 
-int mysocket;
+int sock;
 
 void* client(void* params)
 {
+    struct sockaddr_in server;
+    char * message = (char*)malloc(sizeof(char)*MAX_ANSWER_SIZE);
 
-    struct sockaddr_in server; //socket info about the server
-    char buffer[MAX_ANSWER_SIZE+1]; //+1 for \0
-    int len;
-    char* out;
-
-    mysocket = socket(AF_INET, SOCK_STREAM, 0);
-    memset(&server, 0, sizeof(server));
-    server.sin_family = AF_INET;        //we want to have IP addresses as referrals
-    server.sin_addr.s_addr = inet_addr("127.0.0.1"); //Set the server's IP
-    server.sin_port = htons(PORTNUM);   //the port we are trying to get through
-
-    while(connect(mysocket, (struct sockaddr *)&server, sizeof(struct sockaddr_in)));
-
-    //from here we have a connection to the server
-
+    sock = socket(AF_INET , SOCK_STREAM , 0);
+     
+    server.sin_addr.s_addr = inet_addr(serverip);
+    server.sin_family = AF_INET;
+    server.sin_port = htons(PORTNUM);
+ 
+    connect(sock , (struct sockaddr *)&server , sizeof(server));
+ 
+    create_thread(c_callback, NULL);
+    
     while(1)
     {
-        if(read_comm(&n_mosi, out)) handle_output(out);
-        if((len = recv(mysocket, buffer, MAX_ANSWER_SIZE, 0)) > 0)
-        {
-            buffer[len] = '\0';     //Null terminate, whatever happens (lost connection e.g.)
-            handle_input(buffer);
+        int size;
+        if(read_comm(&n_mosi, message)){
+            handle_output(message);
         }
-        sleep(10);  //we want to wait a bit not to occupy the CPU too much
     }
 
-    close(mysocket);
-
-
 }
+
+void* c_callback(void* params)
+{
+    int size;
+    char server_reply[MAX_RESPONSE_SIZE];
+    while((size = recv(sock , server_reply , MAX_RESPONSE_SIZE , 0)) > 0)
+    {
+        server_reply[size] = '\0';
+        handle_input(server_reply);
+    }
+}
+
 
 void handle_output(char* out)
 {
     build_http(HEADER, out);
-    send(mysocket, out, strlen(out), 0);
+    send(sock, out, strlen(out), 0);
 }
 
 void handle_input(char* in)

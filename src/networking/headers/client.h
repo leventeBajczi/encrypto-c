@@ -11,7 +11,7 @@
 #include <sys/socket.h> 
 
 #include "../../misomosi/headers/misomosi.h"
-
+#include "../../threads/headers/threads.h"
 #include "../../text/headers/http.h"
 
 
@@ -22,5 +22,6 @@
 
 void handle_input(char*);
 void handle_output(char*);
+void* c_callback(void*);
 void* client(void*);
 #endif
