@@ -13,6 +13,7 @@
 #include "../../misomosi/headers/misomosi.h"
 #include "../../threads/headers/threads.h"
 #include "../../text/headers/http.h"
+#include "../../text/headers/json.h"
 
 
 #define PORTNUM 1111

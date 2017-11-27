@@ -26,8 +26,12 @@ int get_value(char* json, char* key, char* value){
         if(en){
             value[j++] = json[i];
             if(json[i] == terminating_char){
-                value[j] = '\0';
-                return 1;
+                if(j==1) j--;
+                else
+                {
+                    value[j-1] = '\0';
+                    return 1;
+                }
             }
             
         }
@@ -39,7 +43,7 @@ int get_value(char* json, char* key, char* value){
             if(counter == 1 && strstr(json+i, key) == json+i){
                 en = 1;
                 i+=strlen(key) + 2;
-                terminating_char = (json[i+1] == '{') ? '}' : ',';
+                terminating_char = (json[i+1] == '{') ? '}' : '\"';
             }
         }
     }
@@ -51,7 +55,7 @@ void finalize(char* msg){
     char en = 0;        //boolean, enable
     for(int i = strlen(msg); i>=0; i--){
         if(msg[i] == '}') en = 1;
-        else if(en && msg[i] == ','){
+        else if(en && (msg[i] == ',')){
             msg[i] = ' ';   //a space is less problematic then an ending comma 
             en = 0;
         }

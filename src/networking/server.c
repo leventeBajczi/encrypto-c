@@ -16,7 +16,7 @@ void* server(void* params)
 
     sockserver.sin_family = AF_INET;
     sockserver.sin_addr.s_addr = INADDR_ANY;
-    sockserver.sin_port = htons(PORTNUM);
+    sockserver.sin_port = htons(PORTNUM+1);
     create_thread(callback, NULL);
     while(1){    
         bind(socket_dest,(struct sockaddr *)&sockserver , sizeof(sockserver));
@@ -43,6 +43,7 @@ void* serverread(void* params)
     while(1)
     {
             read_size = recv(socket, client_message , MAX_RESPONSE_SIZE , 0);
+            if(read_size <= 0) return NULL;
             client_message[read_size] = '\0';
             s_handle_input(client_message);
     }
@@ -57,16 +58,20 @@ void s_handle_input(char* in)
 
 void* callback(void* params)
 {
-    char *msg = (char*)malloc(sizeof(char)*MAX_ANSWER_SIZE);
+    char *msg;
 
     while(1)
     {
-        if(read_comm(&c_mosi, msg))
+        if(read_comm(&c_mosi, &msg))
         {
+            msg = realloc(msg, sizeof(char)*MAX_RESPONSE_SIZE);
+            build_http(HEADER, msg);
+                
             for(int i = 0; i<socketnumber; i++)
             {
                 send(sockets[i], msg, strlen(msg), 0);
             }
         }
+        nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);
     }
 }

@@ -25,7 +25,7 @@
 #define DEFAULT_SERVER      "127.0.0.1"
 
 #define SIZE 16         //max size of communication between the master and the slave
-#define MAX_SIZE 512    //max size of each message between the master and the slave
+#define MAX_SIZE 4096   //max size of each message between the master and the slave
 
 int start(char*, char*, char*, char*);
 #endif

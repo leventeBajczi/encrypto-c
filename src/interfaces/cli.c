@@ -11,7 +11,7 @@ void *cli(void* params){
 
     while(1)
     {
-        while(!read_comm(&i_mosi, out));
+        while(!read_comm(&i_mosi, &out))nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);
         printf("%s", out);
     }
 

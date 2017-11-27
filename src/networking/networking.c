@@ -18,10 +18,11 @@ void* router(void* param)
     char* out = (char*)malloc(sizeof(char)*MAX_RESPONSE_SIZE);
     while(1)
     {
-        if(read_comm(&n_miso, out)) write_comm(&i_mosi, out);
-        if(read_comm(&i_miso, out)) {
+        if(read_comm(&n_miso, &out)) write_comm(&i_mosi, out);
+        if(read_comm(&i_miso, &out)) {
             write_comm(&n_mosi, out);
         }
+        nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);
     }
     free(out);    
 }

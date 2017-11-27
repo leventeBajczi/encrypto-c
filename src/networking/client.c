@@ -15,7 +15,7 @@ void* client(void* params)
      
     server.sin_addr.s_addr = inet_addr(serverip);
     server.sin_family = AF_INET;
-    server.sin_port = htons(PORTNUM);
+    server.sin_port = htons(PORTNUM+1);
  
     connect(sock , (struct sockaddr *)&server , sizeof(server));
  
@@ -23,10 +23,10 @@ void* client(void* params)
     
     while(1)
     {
-        int size;
-        if(read_comm(&n_mosi, message)){
+        if(read_comm(&n_mosi, &message)){
             handle_output(message);
         }
+        nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);
     }
 
 }
@@ -45,12 +45,26 @@ void* c_callback(void* params)
 
 void handle_output(char* out)
 {
-    build_http(HEADER, out);
-    send(sock, out, strlen(out), 0);
+    char json[MAX_RESPONSE_SIZE];
+    memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE);
+    build_json(json, "type", "message");
+    build_json(json, "sender", "Bela");
+    build_json(json, "content", out);
+    finalize(json);
+    build_http(HEADER, json);
+    send(sock, json, strlen(json), 0);
 }
 
 void handle_input(char* in)
 {
     in = get_http(in);
-    write_comm(&n_miso, in);        //We do not want to directly communicate with the interface, let the main thread take care of that
+    char value[MAX_ANSWER_SIZE], content[MAX_ANSWER_SIZE];
+    get_value(in, "type", value);
+    if(strcmp(value, "message") == 0)
+    {
+        get_value(in, "sender", value);
+        get_value(in, "content", content);
+        sprintf(in, "%s:\t\t%s\n", value, content);
+        write_comm(&n_miso, in);        //We do not want to directly communicate with the interface, let the router thread take care of that
+    }
 }
