@@ -12,7 +12,7 @@ void *cli(void* params){
     while(1)
     {
         while(!read_comm(&i_mosi, &out))nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);
-        printf("%s", out);
+        printf("\033[s\r\033[1A\r\033[K\r%s\033[u", out);
     }
 
     free(out);
@@ -23,7 +23,8 @@ void *listener(void* params)
     char* input = (char*)malloc(sizeof(char)*MAX_RESPONSE_SIZE);
     while(1)
     {
-        scanf("%s", input);
+        int i = 0;
+        while((input[i++] = fgetc(stdin)) != '\n' );
         write_comm(&i_miso, input);
     }
     free(input);
