@@ -5,8 +5,11 @@ extern char* portnum;
 extern char* connection;
 extern char* partnerip;
 
+extern char** i_mosi;
+extern char** i_miso;
+
 GtkTextBuffer *buffer_messages;
-GtkTextBuffer *buffer_entry;
+GtkWidget *entry;
 
 
 static void start(GtkApplication* app, gpointer user_data)
@@ -89,11 +92,10 @@ static void start(GtkApplication* app, gpointer user_data)
     gtk_grid_attach(GTK_GRID(grid), scrolled_window, 0, 5, 7, 5);
 
 
-    view = gtk_text_view_new ();
-    buffer_entry = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
-    gtk_text_buffer_set_text (buffer_entry, "<Place for input>", -1);
-    gtk_widget_set_size_request(view, 350, 70);
-    gtk_container_add(GTK_CONTAINER(scrolled_window), view);
+    entry = gtk_entry_new ();
+    gtk_widget_set_size_request(entry, 350, 70);
+    g_signal_connect(entry, "activate", G_CALLBACK(send_clicked), NULL);
+    gtk_container_add(GTK_CONTAINER(scrolled_window), entry);
 
     button = gtk_button_new_with_label ("Send");
     g_signal_connect (button, "clicked", G_CALLBACK (send_clicked), NULL);
@@ -101,6 +103,7 @@ static void start(GtkApplication* app, gpointer user_data)
 
 
     gtk_widget_show_all (window);
+
 }
 
 
@@ -110,18 +113,38 @@ void* gui(void* params)
     GtkApplication *app;
     int status;
 
+    create_thread(handler, NULL);
     app = gtk_application_new ("hu.bme.xao5er.encrypto", G_APPLICATION_FLAGS_NONE);
     g_signal_connect (app, "activate", G_CALLBACK (start), NULL);
     status = g_application_run (G_APPLICATION (app), 0, NULL);
     g_object_unref (app);
+
+
+
 }
 
 void send_clicked()
 {
+    const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
+    write_comm(&i_miso, (char*)text);
+    gtk_entry_set_text(GTK_ENTRY(entry), "");
+}
+
+void* handler(void* params)
+{
+    char* out = NULL;
     GtkTextIter start, end;
-    gtk_text_buffer_get_bounds(buffer_entry, &start, &end);
-    gchar *text = gtk_text_buffer_get_text(buffer_entry, &start, &end, FALSE));
-    write_comm(&i_miso, text);
-    g_free(text);
-    gtk_text_buffer_set_text(buffer_entry, "", -1);
+    gchar *text;
+    while(1)
+    {
+        while(!read_comm(&i_mosi, &out))nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);
+        gtk_text_buffer_get_bounds(buffer_messages, &start, &end);
+        text = gtk_text_buffer_get_text(buffer_messages, &start, &end, FALSE);
+        out = (char*)realloc(out, sizeof(char)*(strlen(out) + strlen(text) + 1));
+        strcat(out, text);
+        gtk_text_buffer_set_text(buffer_messages,out,-1);
+        g_free(text);
+    }
+
+    free(out);
 }
