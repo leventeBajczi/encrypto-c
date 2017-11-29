@@ -9,6 +9,7 @@
 #include "../../misomosi/headers/misomosi.h"
 
 void* gui(void*);
+void send_clicked();
 #define MAX_RESPONSE_SIZE 4096
 
 #endif

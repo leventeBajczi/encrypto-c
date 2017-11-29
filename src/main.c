@@ -6,6 +6,9 @@ char** i_mosi;
 char** i_miso;
 char** c_mosi;
 char* serverip;
+char* portnum = "1883";
+char* connection = "Connected";
+char* partnerip = "127.0.0.1";
 
 int main(int argc, char** argv){
     int i = 0;
