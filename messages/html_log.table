@@ -1,0 +1,361 @@
+<tr><td>received</td><td>0.0.0.0</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 77
+
+{"type": "status","sender": "Anon","content": "Connection successful from " }</td></tr><tr><td>sent</td><td>0.0.0.0</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 77
+
+{"type": "status","sender": "Anon","content": "Connection successful from " }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "ahoi" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "ahoi" }</td></tr><tr><td>received</td><td>0.0.0.0</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 77
+
+{"type": "status","sender": "Anon","content": "Connection successful from " }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 77
+
+{"type": "status","sender": "Anon","content": "Connection successful from " }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 77
+
+{"type": "status","sender": "Anon","content": "Connection successful from " }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 56
+
+{"type": "message","sender": "Anon","content": "hi #2" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 56
+
+{"type": "message","sender": "Anon","content": "hi #2" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 56
+
+{"type": "message","sender": "Anon","content": "hi #2" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 56
+
+{"type": "message","sender": "Anon","content": "sziaa" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 56
+
+{"type": "message","sender": "Anon","content": "sziaa" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 56
+
+{"type": "message","sender": "Anon","content": "sziaa" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 158
+
+{"type": "message","sender": "Anon","content": "ez nagyon király, de kiváncsi lennék, hogy ha hosszabb szöveget irok, az hogy a fenébe fog megjelenni " }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 158
+
+{"type": "message","sender": "Anon","content": "ez nagyon király, de kiváncsi lennék, hogy ha hosszabb szöveget irok, az hogy a fenébe fog megjelenni " }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 158
+
+{"type": "message","sender": "Anon","content": "ez nagyon király, de kiváncsi lennék, hogy ha hosszabb szöveget irok, az hogy a fenébe fog megjelenni " }</td></tr><tr><td>received</td><td>0.0.0.0</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 77
+
+{"type": "status","sender": "Anon","content": "Connection successful from " }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 77
+
+{"type": "status","sender": "Anon","content": "Connection successful from " }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 77
+
+{"type": "status","sender": "Anon","content": "Connection successful from " }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 77
+
+{"type": "status","sender": "Anon","content": "Connection successful from " }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 157
+
+{"type": "message","sender": "Anon","content": "ez nagyon király, de kiváncsi lennék, hogy ha hosszabb szöveget irok, az hogy a fenébe fog megjelenni" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 157
+
+{"type": "message","sender": "Anon","content": "ez nagyon király, de kiváncsi lennék, hogy ha hosszabb szöveget irok, az hogy a fenébe fog megjelenni" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 157
+
+{"type": "message","sender": "Anon","content": "ez nagyon király, de kiváncsi lennék, hogy ha hosszabb szöveget irok, az hogy a fenébe fog megjelenni" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 157
+
+{"type": "message","sender": "Anon","content": "ez nagyon király, de kiváncsi lennék, hogy ha hosszabb szöveget irok, az hogy a fenébe fog megjelenni" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 157
+
+{"type": "message","sender": "Anon","content": "ez nagyon király, de kiváncsi lennék, hogy ha hosszabb szöveget irok, az hogy a fenébe fog megjelenni" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 157
+
+{"type": "message","sender": "Anon","content": "ez nagyon király, de kiváncsi lennék, hogy ha hosszabb szöveget irok, az hogy a fenébe fog megjelenni" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 157
+
+{"type": "message","sender": "Anon","content": "ez nagyon király, de kiváncsi lennék, hogy ha hosszabb szöveget irok, az hogy a fenébe fog megjelenni" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 157
+
+{"type": "message","sender": "Anon","content": "ez nagyon király, de kiváncsi lennék, hogy ha hosszabb szöveget irok, az hogy a fenébe fog megjelenni" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 137
+
+{"type": "message","sender": "Anon","content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 137
+
+{"type": "message","sender": "Anon","content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 137
+
+{"type": "message","sender": "Anon","content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 137
+
+{"type": "message","sender": "Anon","content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "bbbb" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "bbbb" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "bbbb" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "bbbb" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 52
+
+{"type": "message","sender": "Anon","content": "b" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "szia" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "szia" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "szia" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "szia" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "helo" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "helo" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "helo" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 55
+
+{"type": "message","sender": "Anon","content": "helo" }</td></tr><tr><td>received</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 53
+
+{"type": "message","sender": "Anon","content": ":D" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 53
+
+{"type": "message","sender": "Anon","content": ":D" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 53
+
+{"type": "message","sender": "Anon","content": ":D" }</td></tr><tr><td>sent</td><td>127.0.0.1</td><td style="text-align:end">HTTP/1.1 200 OK
+User-agent: encrypto-0.1.0
+Content-Type: text/html
+Content-Length: 53
+
+{"type": "message","sender": "Anon","content": ":D" }</td></tr>

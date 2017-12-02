@@ -20,9 +20,11 @@
 #define MAX_ANSWER_SIZE 3584    //3.5kiB for the body
 #define MAX_RESPONSE_SIZE 4096  //4kiB for the entire message
 #define HEADER "HTTP/1.1 200 OK\nUser-agent: encrypto-0.1.0\nContent-Type: text/html\nContent-Length: "
+#define CONNECTION_CONNECTED "Connected"
 
 void handle_input(char*);
 void handle_output(char*);
 void* c_callback(void*);
 void* client(void*);
+void send_connected();
 #endif

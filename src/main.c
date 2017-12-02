@@ -6,17 +6,28 @@ char** i_mosi;
 char** i_miso;
 char** c_mosi;
 char* serverip;
-char* portnum = "1883";
-char* connection = "Connected";
-char* partnerip = "127.0.0.1";
+char* portnum;
+char* connection;
+char* partnerip;
+char* name;
+char* directory;
+char* keyfiles;
+
+int running = 1;
 
 int main(int argc, char** argv){
     int i = 0;
     char* mode      = DEFAULT_MODE;
     char* client    = DEFAULT_CLIENT;
-    char* directory = DEFAULT_DIRECTORY;
-    char* keyfiles  = DEFAULT_KEYS;
+    directory       = DEFAULT_DIRECTORY;
+    keyfiles        = DEFAULT_KEYS;
     serverip        = DEFAULT_SERVER;
+    portnum         = DEFAULT_PORT;
+    connection      = DEFAULT_CONNECTION;
+    partnerip       = DEFAULT_PARTNERIP;
+    name            = DEFAULT_NAME;
+
+    signal(SIGINT, sigint_handler);
 
     for(i = 1; i<argc;i++){
         if      (strcmp(argv[i], MODE_SWITCH) == 0){
@@ -33,6 +44,12 @@ int main(int argc, char** argv){
         }
         else if (strcmp(argv[i], SERVER_SWITCH) == 0){
             serverip  = argv[++i];
+        }
+        else if (strcmp(argv[i], NAME_SWITCH) == 0){
+            name      = argv[++i];
+        }
+        else if (strcmp(argv[i], PORT_SWITCH) == 0){
+            portnum   = argv[++i];
         }
         else{
             printf("Unrecognized CLI switch %s, quitting.", argv[i]);
@@ -58,4 +75,12 @@ int start(char* mode, char* client, char* keyfiles, char* directory){
     free_str_array(&i_miso, SIZE);
     free_str_array(&c_mosi, SIZE);
     return 0;
+}
+
+
+//SIGINT HANDLER
+void sigint_handler()
+{
+    printf("Quitting program...");
+    running = 0;
 }

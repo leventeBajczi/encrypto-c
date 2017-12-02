@@ -5,9 +5,14 @@ extern char** i_mosi;
 extern char** n_mosi;
 extern char** i_miso;
 
+extern int running;
+
 void networking(char* param)
 {
-    if(strcmp(param, SERVER_MODE) == 0) create_thread(server, NULL);
+    if(strcmp(param, SERVER_MODE) == 0){
+        create_thread(server, NULL);
+        create_thread(host_info, NULL);
+    }
     else create_thread(client, NULL);
     
     create_thread(router, NULL);
@@ -16,7 +21,7 @@ void networking(char* param)
 void* router(void* param)
 {
     char* out = (char*)malloc(sizeof(char)*MAX_RESPONSE_SIZE);
-    while(1)
+    while(running)
     {
         if(read_comm(&n_miso, &out)) write_comm(&i_mosi, out);
         if(read_comm(&i_miso, &out)) {

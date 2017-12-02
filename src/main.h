@@ -17,15 +17,22 @@
 #define KEYS_SWITCH         "-k"
 #define DIRECTORY_SWITCH    "-d"
 #define SERVER_SWITCH       "-s"
+#define NAME_SWITCH         "-n"
+#define PORT_SWITCH         "-p"
 
 #define DEFAULT_MODE        "client"
 #define DEFAULT_CLIENT      "cli"
 #define DEFAULT_KEYS        "./"
 #define DEFAULT_DIRECTORY   "./messages"
 #define DEFAULT_SERVER      "127.0.0.1"
+#define DEFAULT_NAME        "Anon"
+#define DEFAULT_PORT        "0"
+#define DEFAULT_CONNECTION  "Not connected"
+#define DEFAULT_PARTNERIP   "-"
 
 #define SIZE 16         //max size of communication between the master and the slave
 #define MAX_SIZE 4096   //max size of each message between the master and the slave
 
+void sigint_handler();
 int start(char*, char*, char*, char*);
 #endif

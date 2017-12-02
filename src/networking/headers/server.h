@@ -12,6 +12,7 @@
 
 #include "../../misomosi/headers/misomosi.h"
 #include "../../threads/headers/threads.h"
+#include "../../file/headers/io.h"
 
 #include "../../text/headers/http.h"
 
@@ -25,4 +26,6 @@ void s_handle_input(char*);
 void* server(void*);
 void* callback(void*);
 void* serverread(void*);
+void* host_info(void*);
+
 #endif

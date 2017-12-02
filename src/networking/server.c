@@ -3,11 +3,16 @@
 extern char** n_miso;
 extern char** c_mosi;
 
+extern char* portnum;
+
+extern int running;
+
 int *sockets;
 int socketnumber = 0;
 
 void* server(void* params)
 {
+    char writeout[25];
     int socket_dest , client_sock , c;
     struct sockaddr_in sockserver , client;
     sockets = (int*)malloc(sizeof(int)*CONCURR_CLIENTS);
@@ -16,35 +21,90 @@ void* server(void* params)
 
     sockserver.sin_family = AF_INET;
     sockserver.sin_addr.s_addr = INADDR_ANY;
-    sockserver.sin_port = htons(PORTNUM+1);
+    sockserver.sin_port = htons(atoi(portnum));
     create_thread(callback, NULL);
-    while(1){    
+    while(running){    
         bind(socket_dest,(struct sockaddr *)&sockserver , sizeof(sockserver));
 
         listen(socket_dest , 1);
-        
         c = sizeof(struct sockaddr_in);
+        getsockname(socket_dest,(struct sockaddr *)&sockserver , (socklen_t*)&c);
+        sprintf(writeout, "Listening on port: %d\n", ntohs(sockserver.sin_port));        
+        write_comm(&n_miso, writeout);
         
         client_sock = accept(socket_dest, (struct sockaddr *)&client, (socklen_t*)&c);
         
         create_thread(serverread, (void*)&client_sock);
         
-    }     
-
+    }   
+    free(sockets);  
 }
+
+void* host_info(void* params)
+{
+    char msg[MAX_ANSWER_SIZE];
+    char* page;
+  
+    struct sockaddr_in dest; /* socket info about the machine connecting to us */
+    struct sockaddr_in serv; /* socket info about our server */
+    int mysocket;            /* socket used to listen for incoming connections */
+    socklen_t socksize = sizeof(struct sockaddr_in);
+
+    memset(&serv, 0, sizeof(serv));           /* zero the struct before filling the fields */
+    serv.sin_family = AF_INET;                /* set the type of connection to TCP/IP */
+    serv.sin_addr.s_addr = htonl(INADDR_ANY); /* set our address to any interface */
+    serv.sin_port = htons(0);           /* set the server port number */    
+
+    mysocket = socket(AF_INET, SOCK_STREAM, 0);
+  
+    /* bind serv information to mysocket */
+    bind(mysocket, (struct sockaddr *)&serv, sizeof(struct sockaddr));
+
+    /* start listening, allowing a queue of up to 1 pending connection */
+    listen(mysocket, 1);
+    getsockname(mysocket,(struct sockaddr *)&serv , &socksize); 
+    sprintf(msg, "Info available on port %d", ntohs(serv.sin_port));  
+    write_comm(&n_miso, msg);
+    int consocket = accept(mysocket, (struct sockaddr *)&dest, &socksize);
+  
+    while(consocket)
+    {
+        page = load_log();
+        build_http(HEADER, page);
+        send(consocket, page, strlen(page), 0); 
+        close(consocket);
+        getsockname(mysocket,(struct sockaddr *)&serv , &socksize);    
+        sprintf(msg, "Info available on port %d", ntohs(serv.sin_port));  
+        write_comm(&n_miso, msg);
+        consocket = accept(mysocket, (struct sockaddr *)&dest, &socksize);
+        free(page);
+    }
+    free(page);
+    close(mysocket);
+}
+
 
 void* serverread(void* params)
 {
     int read_size;
     int socket = ((int*)params)[0];
     char client_message[MAX_RESPONSE_SIZE];
+    struct sockaddr_in socketaddr;
+    int c;
+    struct in_addr ip;
+    char str[16];
+            
+    
     sockets[socketnumber] = socket;
     socketnumber++;
-    while(1)
+    while(running)
     {
             read_size = recv(socket, client_message , MAX_RESPONSE_SIZE , 0);
             if(read_size <= 0) return NULL;
             client_message[read_size] = '\0';
+            getsockname(socket,(struct sockaddr *)&socketaddr , (socklen_t*)&c);
+            inet_ntop( AF_INET, &(socketaddr.sin_addr), str, INET_ADDRSTRLEN );
+            log_file("received", str, client_message);
             s_handle_input(client_message);
     }
 }
@@ -60,18 +120,27 @@ void* callback(void* params)
 {
     char *msg;
 
-    while(1)
+    while(running)
     {
         if(read_comm(&c_mosi, &msg))
         {
+            struct sockaddr_in socket;
+            int c;
+            struct in_addr ip;
+            char str[16];
             msg = realloc(msg, sizeof(char)*MAX_RESPONSE_SIZE);
             build_http(HEADER, msg);
                 
             for(int i = 0; i<socketnumber; i++)
             {
+                getsockname(sockets[i],(struct sockaddr *)&socket , (socklen_t*)&c);
+                ip = socket.sin_addr;
+                inet_ntop( AF_INET, &ip, str, INET_ADDRSTRLEN );
+                log_file("sent", str, msg);
                 send(sockets[i], msg, strlen(msg), 0);
             }
         }
         nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);
     }
+    free(msg);
 }
