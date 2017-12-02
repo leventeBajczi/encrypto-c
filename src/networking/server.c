@@ -1,7 +1,7 @@
 #include "headers/server.h"
 
 extern char** n_miso;
-extern char** c_mosi;
+extern char** s_fifo;
 
 extern char* portnum;
 
@@ -113,7 +113,7 @@ void s_handle_input(char* in)
 {
     in = get_http(in);
     write_comm(&n_miso, in);        //We do not want to directly communicate with the interface, let the main thread take care of that
-    write_comm(&c_mosi, in);
+    write_comm(&s_fifo, in);
 }
 
 void* callback(void* params)
@@ -122,7 +122,7 @@ void* callback(void* params)
 
     while(running)
     {
-        if(read_comm(&c_mosi, &msg))
+        if(read_comm(&s_fifo, &msg))
         {
             struct sockaddr_in socket;
             int c;

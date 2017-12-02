@@ -4,7 +4,7 @@ char** n_mosi;
 char** n_miso;
 char** i_mosi;
 char** i_miso;
-char** c_mosi;
+char** s_fifo;
 char* serverip;
 char* portnum;
 char* connection;
@@ -14,6 +14,7 @@ char* directory;
 char* keyfiles;
 
 int running = 1;
+char* aes_key;
 
 int main(int argc, char** argv){
     int i = 0;
@@ -60,11 +61,13 @@ int main(int argc, char** argv){
 }
 
 int start(char* mode, char* client, char* keyfiles, char* directory){
+    generate_keypair();
+
     allocate_str_array(&n_mosi, SIZE, MAX_SIZE);
     allocate_str_array(&n_miso, SIZE, MAX_SIZE);
     allocate_str_array(&i_mosi, SIZE, MAX_SIZE);
     allocate_str_array(&i_miso, SIZE, MAX_SIZE);
-    allocate_str_array(&c_mosi, SIZE, MAX_SIZE);
+    allocate_str_array(&s_fifo, SIZE, MAX_SIZE);
 
     networking(mode);
     interfaces(client);
@@ -73,7 +76,7 @@ int start(char* mode, char* client, char* keyfiles, char* directory){
     free_str_array(&n_miso, SIZE);
     free_str_array(&i_mosi, SIZE);
     free_str_array(&i_miso, SIZE);
-    free_str_array(&c_mosi, SIZE);
+    free_str_array(&s_fifo, SIZE);
     return 0;
 }
 

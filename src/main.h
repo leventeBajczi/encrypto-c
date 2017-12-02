@@ -22,7 +22,7 @@
 
 #define DEFAULT_MODE        "client"
 #define DEFAULT_CLIENT      "cli"
-#define DEFAULT_KEYS        "./"
+#define DEFAULT_KEYS        "./keyfiles"
 #define DEFAULT_DIRECTORY   "./messages"
 #define DEFAULT_SERVER      "127.0.0.1"
 #define DEFAULT_NAME        "Anon"

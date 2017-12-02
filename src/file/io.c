@@ -1,6 +1,7 @@
 #include "headers/io.h"
 
 extern char* directory;
+extern char* keyfiles;
 
 void log_file(char* tag, char* client, char* message)
 {
@@ -20,7 +21,7 @@ char* load_log()
     int chars = 0;
     char * contents;
     sprintf(filename, "%s/%s", directory, LOGFILE);
-    f = fopen(filename, "r");
+    f = fopen(filename, "r+");
     while(fgetc(f) != EOF)chars++;
     contents = (char*)malloc(sizeof(char)*(strlen(HTML_BEGIN)+strlen(HTML_END)+chars+strlen(HEADER) + 15));
     rewind(f);
@@ -32,4 +33,16 @@ char* load_log()
     fclose(f);
     free(filename);
     return contents;
+}
+
+void write_pem(const char* type, char* data, const char* file)
+{
+    FILE *f;
+    char * filename = (char*)malloc(sizeof(char)*(strlen(file)+strlen(keyfiles)+1));
+    sprintf(filename, "%s/%s", keyfiles, file);
+    f = fopen(filename, "w+");
+    fwrite(data, 1, strlen(data), f);
+    free(data);
+    fclose(f);
+    free(filename);
 }

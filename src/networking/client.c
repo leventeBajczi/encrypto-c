@@ -9,7 +9,7 @@ extern char* name;
 
 extern int running;
 
-extern uint8_t* aes_key;
+extern char* aes_key;
 
 int counter = 0;
 

@@ -12,5 +12,6 @@
 
 void log_file(char* , char* , char*);
 char* load_log();
+void write_pem(const char* , char* , const char*);
 
 #endif
