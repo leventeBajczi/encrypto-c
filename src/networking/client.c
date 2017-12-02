@@ -9,6 +9,10 @@ extern char* name;
 
 extern int running;
 
+extern uint8_t* aes_key;
+
+int counter = 0;
+
 int sock;
 
 void* client(void* params)
@@ -25,6 +29,7 @@ void* client(void* params)
     while(connect(sock , (struct sockaddr *)&server , sizeof(server)));
     connection = CONNECTION_CONNECTED;
     send_connected();
+    send_key_request();
  
     create_thread(c_callback, NULL);
     
@@ -57,6 +62,7 @@ void handle_output(char* out)
     memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE);
     build_json(json, "type", "message");
     build_json(json, "sender", name);
+    encrypt_aes(out);
     build_json(json, "content", out);
     finalize(json);
     build_http(HEADER, json);
@@ -66,12 +72,13 @@ void handle_output(char* out)
 void handle_input(char* in)
 {
     in = get_http(in);
-    char value[MAX_ANSWER_SIZE], content[MAX_ANSWER_SIZE];
+    char value[MAX_ANSWER_SIZE], content[MAX_ANSWER_SIZE], key[KEYSIZE];
     get_value(in, "type", value);
     if(strcmp(value, "message") == 0)
     {
         get_value(in, "sender", value);
         get_value(in, "content", content);
+        decrypt_aes(content);
         sprintf(in, "%s:\t\t%s", value, content);
         write_comm(&n_miso, in);        //We do not want to directly communicate with the interface, let the router thread take care of that
     }
@@ -81,6 +88,43 @@ void handle_input(char* in)
         get_value(in, "content", content);
         sprintf(in, "%s%s", content, value);
         write_comm(&n_miso, in);        //We do not want to directly communicate with the interface, let the router thread take care of that
+    }
+    else if(strcmp(value, "key request")==0)
+    {   
+        if(counter){
+            counter++;      //We get one from ourselves, ignore that
+            return;
+        }
+        get_value(in, "sender", value);
+        if(aes_key)
+        {
+            sprintf(in, "%s requested RSA public key", value);
+            send_public_key();
+        }else
+        {
+            get_value(in, "pubkey", content);
+            send_aes_key(content);
+            sprintf(in, "%s requested key", value);
+        }
+        write_comm(&n_miso, in);
+
+    }
+    else if(strcmp(value, "key response")==0)
+    {
+        get_value(in, "sender", value);
+        get_value(in, "content", content);
+        get_value(in, "pubkey", key);
+        sprintf(in, "%s%s", content, value);
+        write_comm(&n_miso, in);        //We do not want to directly communicate with the interface, let the router thread take care of that
+        send_aes_key(key);
+    }
+    else if(strcmp(value, "key negotiation")==0)
+    {   
+        get_value(in, "sender", value);
+        get_value(in, "key", content);
+        sprintf(in, "%s sent AES key", value);
+        handle_aes_key(content);
+        write_comm(&n_miso, in);
     }
 }
 
@@ -94,4 +138,49 @@ void send_connected()
     finalize(json);
     build_http(HEADER, json);
     send(sock, json, strlen(json), 0);
+}
+
+void send_public_key()
+{
+    char json[MAX_RESPONSE_SIZE];
+    char* pubkey = load_public_key();
+    memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE);
+    build_json(json, "type", "key response");
+    build_json(json, "sender", name);
+    build_json(json, "content", "Received key from ");
+    build_json(json, "pubkey", pubkey);
+    finalize(json);
+    build_http(HEADER, json);
+    send(sock, json, strlen(json), 0);
+    free(pubkey);
+}
+
+void send_aes_key(char* key)
+{
+    char json[MAX_RESPONSE_SIZE];
+    char* aeskey = malloc(AES_KEYLEN);
+    memcpy(aeskey, aes_key, AES_KEYLEN);
+    encrypt_rsa(key, aeskey);
+    memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE);
+    build_json(json, "type", "key negotiation");
+    build_json(json, "sender", name);
+    build_json(json, "key", aeskey);
+    finalize(json);
+    build_http(HEADER, json);
+    send(sock, json, strlen(json), 0);
+    free(aeskey);
+}
+
+void send_key_request()
+{
+    char json[MAX_RESPONSE_SIZE];
+    char* pubkey = load_public_key();
+    memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE);
+    build_json(json, "type", "key request");
+    build_json(json, "sender", name);
+    build_json(json, "pubkey", pubkey);
+    finalize(json);
+    build_http(HEADER, json);
+    send(sock, json, strlen(json), 0);
+    free(pubkey);
 }
