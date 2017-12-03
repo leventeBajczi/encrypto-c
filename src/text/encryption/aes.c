@@ -3,6 +3,8 @@
 gcry_cipher_hd_t aes_ciph;
 char* aes_key;
 
+extern char* password;
+
 void handle_aes_key(char* key)
 {
     char* decoded = decode_base64(key);
@@ -49,6 +51,7 @@ void encrypt_private(char** rsa, int len)
     char passwd_hash[32];
     char passwd[60];
     scanf("%s", passwd);
+    password = passwd;
     size_t pass_len = passwd[0] ? strlen(passwd) : 0;
 
     if(!pass_len)
