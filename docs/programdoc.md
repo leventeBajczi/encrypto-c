@@ -30,6 +30,27 @@ Diese ist die "Settings" file des Programmes. Jede #define Direktiv ist hier ang
 1. **gui.c**
     1. static void start(GtkApplication* app, gpointer user_data) - Für den Aussicht des GUIs
     1. void* gui(void* params) - Eintrittspunkt des GUI-kodes.
-    1. void send_clicked() - wenn ENTER oder Send gedrückt wird, specihern wir die Eingabe in i_miso.
+    1. void send_clicked() - wenn ENTER oder Send gedrückt wird, speichern wir die Eingabe in i_miso.
     1. void* handler(void* params) - falls i_mosi nicht leer ist, schreiben wir seine Daten aus.
-1. 
+### **misomosi** - Für memory
+1. **memory.c**
+    1. void allocate_str_array(char*** array, int size, int piece_size) - eine zweidimensionellen Char-Array allokieren aus einem char***
+    1. void free_str_array(char*** array, int size) - die oben allokierten array freilassen.
+    1. void shift(char*** array, int size) - Die ganze FIFO nach links schiften.
+1. **misomosi.c**
+    1. void write_comm(char*** ch, char* in) - eine der FIFOs mit Daten schreiben.
+    1. int read_comm(char*** ch, char** out) - eine der FIFOs auslesen, falls es Daten innerhalb gibt, true zurücktreten, und diese Element löschen (durch schiften).
+### **networking** - Für Server- und Clientoperationen
+1. **networking.c**
+    1. void networking(char* param) - abhängig von dem CLI-parametern entweder Server oder Client-Thread starten, und auch eine Router-Thread:
+    1. void* router(void* param) - die FIFO-s handeln
+1. **server.c**
+    1. void* server(void* params) - Eintrittspunkt für den Server, fängt an zu listen-en (auf dem spezifierten Port), started andere Threads(callback, serverread).
+    1. void* host_info(void* params) - Eintrittspunkt für den Information-server (der ermöglicht den Admin-Oberfläche).
+    1. void* serverread(void* params) - Für einkommene Daten (-> n_miso)
+    1. void s_handle_input(char* in) - Für einkommene Daten (Hilfsfunktion)
+    1. void* callback(void* params) - Verteilung des einkommenden Daten (nach jede verbundene Client)
+1. **client.c**
+    
+    Sehr ähnlic zu server, aber:
+    1. void handle_input(char* in) - parsieren den einkommenden Daten - message, status, key request, key response, key negotiation -> entsprechende Hilfsfunktionen, sehr trivial (sehen Sie den Grafikonen unten).
