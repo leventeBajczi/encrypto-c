@@ -13,7 +13,11 @@ void networking(char* param)
         create_thread(server, NULL);
         create_thread(host_info, NULL);
     }
-    else create_thread(client, NULL);
+    else {
+        generate_keypair();
+        create_thread(client, NULL);
+
+    }
     
     create_thread(router, NULL);
 }

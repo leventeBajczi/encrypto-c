@@ -18,7 +18,6 @@ int read_comm(char*** ch, char** out){
 
     while(strcmp("", (*ch)[i]) == 0 && i>0) i--;
     if(strcmp("", (*ch)[i]) != 0){
-        *out = (char*)realloc(*out, sizeof(char) * (strlen((*ch)[i]) + 1));
         strcpy(*out, (*ch)[i]);
         strcpy((*ch)[i], "");
         return 1;

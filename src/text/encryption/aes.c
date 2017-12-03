@@ -1,28 +1,44 @@
 #include "headers/aes.h"
 
-gcry_cipher_hd_t aes_key;
+gcry_cipher_hd_t aes_ciph;
+char* aes_key;
 
 void handle_aes_key(char* key)
 {
     char* decoded = decode_base64(key);
     decrypt_rsa(decoded, strlen(key)*3/4);
-    memcpy(aes_key, decoded,  strlen(key)*3/4);
+    aes_key = decoded;
+    int err = gcry_cipher_open(&aes_ciph, GCRY_CIPHER_AES256, GCRY_CIPHER_MODE_ECB, 0);
+    if (err) {
+        printf("gcrypt: failed to create aes handle");
+    }
+
+    err = gcry_cipher_setkey(aes_ciph, (const void*) decoded, 32);
+    if (err) {
+        printf("gcrypt: could not set cipher key");
+    }
 }
 char* get_aes_key()
 {
-    return encode_base64(&aes_key, sizeof(aes_key));
+    return aes_key ? encode_base64(aes_key, strlen(aes_key)) : NULL;
 }
-void encrypt_aes(char* content)
+void encrypt_aes(char** content)
 {
-    int err = gcry_cipher_encrypt(aes_key, (unsigned char*) content, strlen(content), NULL, 0);
+    size_t size = ((strlen(*content) + 1) / gcry_cipher_get_algo_blklen(GCRY_CIPHER_AES256) + 1)*gcry_cipher_get_algo_blklen(GCRY_CIPHER_AES256);
+    char* encrypted = (char*)malloc(size);
+    int err = gcry_cipher_encrypt(aes_ciph, (unsigned char*)encrypted, size, *content, size);
     if (err) {
         printf("gcrypt: could not encrypt with AES");
         abort();
     }
+    free(*content);
+    *content = encode_base64(encrypted, size);
 }
-void decrypt_aes(char* content)
+void decrypt_aes(char** content)
 {
-    int err = gcry_cipher_decrypt(aes_key, (unsigned char*) content, strlen(content), NULL, 0);
+    size_t size = strlen(*content)*3/4 - strlen(*content)*3/4 % gcry_cipher_get_algo_blklen(GCRY_CIPHER_AES256);
+    *content = decode_base64(*content);
+    int err = gcry_cipher_decrypt(aes_ciph, (unsigned char*) *content, size, NULL, 0);
     if (err) {
         printf("gcrypt: could not decrypt with AES");
         abort();
@@ -69,5 +85,30 @@ void encrypt_private(char** rsa, int len)
         abort();
     }
     gcry_cipher_close(aes_hd);
+
+}
+
+void generate_aes()
+{
+    uint8_t *rand;
+#if MODE == 0
+    rand = genrand_rdrand(32);
+#elif MODE == 1
+    rand = genrand_urandom(32);
+#elif MODE == 2
+    rand = genrand_random(32);
+#endif
+
+    aes_key = encode_base64(rand, 32);
+
+    int err = gcry_cipher_open(&aes_ciph, GCRY_CIPHER_AES256, GCRY_CIPHER_MODE_ECB, 0);
+    if (err) {
+        printf("gcrypt: failed to create aes handle");
+    }
+
+    err = gcry_cipher_setkey(aes_ciph, (const void*) rand, 32);
+    if (err) {
+        printf("gcrypt: could not set cipher key");
+    }
 
 }

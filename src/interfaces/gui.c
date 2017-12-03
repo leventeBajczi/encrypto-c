@@ -139,7 +139,7 @@ void send_clicked()
 
 void* handler(void* params)
 {
-    char* out = NULL;
+    char* out = (char*)malloc(sizeof(char)*MAX_RESPONSE_SIZE);
     GtkTextIter start, end;
     gchar *text;
     while(!buffer_messages);    //so that we don't try and use an empty buffer

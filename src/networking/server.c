@@ -118,7 +118,7 @@ void s_handle_input(char* in)
 
 void* callback(void* params)
 {
-    char *msg;
+    char *msg = (char*)malloc(sizeof(char)*MAX_RESPONSE_SIZE);
 
     while(running)
     {
@@ -133,11 +133,13 @@ void* callback(void* params)
                 
             for(int i = 0; i<socketnumber; i++)
             {
+                if(sockets[i] == 1)continue;
                 getsockname(sockets[i],(struct sockaddr *)&socket , (socklen_t*)&c);
+                if(socket.sin_zero)
                 ip = socket.sin_addr;
                 inet_ntop( AF_INET, &ip, str, INET_ADDRSTRLEN );
                 log_file("sent", str, msg);
-                send(sockets[i], msg, strlen(msg), 0);
+                if(send(sockets[i], msg, strlen(msg), 0)<0)sockets[i] = 1;
             }
         }
         nanosleep((const struct timespec[]){{0, 10000000L}}, NULL);

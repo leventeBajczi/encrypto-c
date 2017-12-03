@@ -9,7 +9,7 @@ extern char* name;
 
 extern int running;
 
-extern gcry_cipher_hd_t aes_key;
+extern char* aes_key;
 int counter = 0;
 
 int sock;
@@ -26,12 +26,13 @@ void* client(void* params)
     server.sin_port = htons(atoi(portnum));
  
     while(connect(sock , (struct sockaddr *)&server , sizeof(server)));
-    connection = CONNECTION_CONNECTED;
     send_connected();
-    send_key_request();
+    connection = CONNECTION_CONNECTED;
  
     create_thread(c_callback, NULL);
     
+    send_key_request();
+
     while(running)
     {
         if(read_comm(&n_mosi, &message)){
@@ -62,7 +63,7 @@ void handle_output(char* out)
     memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE);
     build_json(json, "type", "message");
     build_json(json, "sender", name);
-    encrypt_aes(out);
+    encrypt_aes(&out);
     build_json(json, "content", out);
     finalize(json);
     build_http(HEADER, json);
@@ -78,8 +79,9 @@ void handle_input(char* in)
     {
         get_value(in, "sender", value);
         get_value(in, "content", content);
-        decrypt_aes(content);
-        sprintf(in, "%s:\t\t%s", value, content);
+        char* helper = &(content[0]);
+        decrypt_aes(&helper);
+        sprintf(in, "%s:\t\t%s", value, helper);
         write_comm(&n_miso, in);        //We do not want to directly communicate with the interface, let the router thread take care of that
     }
     else if(strcmp(value, "status") == 0)
@@ -96,7 +98,7 @@ void handle_input(char* in)
             return;
         }
         get_value(in, "sender", value);
-        if(get_aes_key())
+        if(!get_aes_key())
         {
             sprintf(in, "%s requested RSA public key", value);
             send_public_key();
@@ -116,6 +118,7 @@ void handle_input(char* in)
         get_value(in, "pubkey", key);
         sprintf(in, "%s%s", content, value);
         write_comm(&n_miso, in);        //We do not want to directly communicate with the interface, let the router thread take care of that
+        generate_aes();
         send_aes_key(key);
     }
     else if(strcmp(value, "key negotiation")==0)
@@ -158,9 +161,8 @@ void send_public_key()
 void send_aes_key(char* key)
 {
     char json[MAX_RESPONSE_SIZE];
-    char* aeskey = malloc(AES_KEYLEN);
-    memcpy(aeskey, aes_key, sizeof(aes_key));
-    aeskey = encrypt_rsa(key, aeskey, sizeof(aes_key));
+    char* aeskey = malloc(AES_KEYLEN*4/3+3);
+    aeskey = encrypt_rsa(key, aeskey, strlen(aes_key));
     memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE);
     build_json(json, "type", "key negotiation");
     build_json(json, "sender", name);

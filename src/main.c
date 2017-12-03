@@ -60,8 +60,6 @@ int main(int argc, char** argv){
 }
 
 int start(char* mode, char* client, char* keyfiles, char* directory){
-    generate_keypair();
-
     allocate_str_array(&n_mosi, SIZE, MAX_SIZE);
     allocate_str_array(&n_miso, SIZE, MAX_SIZE);
     allocate_str_array(&i_mosi, SIZE, MAX_SIZE);

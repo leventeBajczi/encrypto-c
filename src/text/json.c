@@ -60,4 +60,5 @@ void finalize(char* msg){
             en = 0;
         }
     }
+    msg[strlen(msg)] = 0;
 }
