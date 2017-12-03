@@ -55,7 +55,7 @@ char* read_key(char* file)
     char * filename = (char*)malloc(sizeof(char)*(strlen(file)+strlen(keyfiles)+2));
     sprintf(filename, "%s/%s", keyfiles, file);
     f = fopen(filename, "r+");
-    char* contents = (char*)malloc(sizeof(char)*KEYLEN*3);
+    char* contents = (char*)malloc(sizeof(char)*KEYLEN*10);
     int i = 0;
     int lastlf;
     while(fgetc(f) != '\n');

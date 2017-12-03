@@ -6,6 +6,7 @@ extern char* serverip;
 extern char* portnum;
 extern char* connection;
 extern char* name;
+extern char* partner;
 
 extern int running;
 
@@ -30,7 +31,7 @@ void* client(void* params)
     connection = CONNECTION_CONNECTED;
  
     create_thread(c_callback, NULL);
-    
+    nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
     send_key_request();
 
     while(running)
@@ -78,6 +79,7 @@ void handle_input(char* in)
     if(strcmp(value, "message") == 0)
     {
         get_value(in, "sender", value);
+        partner = value;
         get_value(in, "content", content);
         char* helper = &(content[0]);
         decrypt_aes(&helper);
@@ -116,17 +118,19 @@ void handle_input(char* in)
         get_value(in, "sender", value);
         get_value(in, "content", content);
         get_value(in, "pubkey", key);
+        if(strcmp(key, read_key("public.key")) == 0) return;
         sprintf(in, "%s%s", content, value);
         write_comm(&n_miso, in);        //We do not want to directly communicate with the interface, let the router thread take care of that
         generate_aes();
         send_aes_key(key);
     }
-    else if(strcmp(value, "key negotiation")==0)
+    else if(strcmp(value, "negotiation")==0)
     {   
+        if(aes_key)return;
         get_value(in, "sender", value);
         get_value(in, "key", content);
-        sprintf(in, "%s sent AES key", value);
         handle_aes_key(content);
+        sprintf(in, "%s sent AES key", value);
         write_comm(&n_miso, in);
     }
 }
@@ -161,16 +165,14 @@ void send_public_key()
 void send_aes_key(char* key)
 {
     char json[MAX_RESPONSE_SIZE];
-    char* aeskey = malloc(AES_KEYLEN*4/3+3);
-    aeskey = encrypt_rsa(key, aeskey, strlen(aes_key));
-    memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE);
-    build_json(json, "type", "key negotiation");
+
+    memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE-1);
+    build_json(json, "type", "negotiation");
     build_json(json, "sender", name);
-    build_json(json, "key", aeskey);
+    build_json(json, "key", aes_key);
     finalize(json);
     build_http(HEADER, json);
     send(sock, json, strlen(json), 0);
-    free(aeskey);
 }
 
 void send_key_request()

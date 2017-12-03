@@ -3,7 +3,7 @@
 extern char* serverip;
 extern char* portnum;
 extern char* connection;
-extern char* partnerip;
+extern char* partner;
 
 extern char** i_mosi;
 extern char** i_miso;
@@ -64,7 +64,7 @@ static void start(GtkApplication* app, gpointer user_data)
     gtk_grid_attach(GTK_GRID(grid), view, 4, 1,2, 1);
 
 
-    view = gtk_label_new(partnerip);
+    view = gtk_label_new(partner);
     gtk_widget_set_size_request(view, 45, 30);
     gtk_grid_attach(GTK_GRID(grid), view, 6, 1,2, 1);
 

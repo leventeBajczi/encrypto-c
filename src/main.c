@@ -8,7 +8,7 @@ char** s_fifo;
 char* serverip;
 char* portnum;
 char* connection;
-char* partnerip;
+char* partner;
 char* name;
 char* directory;
 char* keyfiles;
@@ -24,7 +24,7 @@ int main(int argc, char** argv){
     serverip        = DEFAULT_SERVER;
     portnum         = DEFAULT_PORT;
     connection      = DEFAULT_CONNECTION;
-    partnerip       = DEFAULT_PARTNERIP;
+    partner         = DEFAULT_PARTNER;
     name            = DEFAULT_NAME;
 
     signal(SIGINT, sigint_handler);

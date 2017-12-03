@@ -28,7 +28,7 @@
 #define DEFAULT_NAME        "Anon"
 #define DEFAULT_PORT        "0"
 #define DEFAULT_CONNECTION  "Not connected"
-#define DEFAULT_PARTNERIP   "-"
+#define DEFAULT_PARTNER   "-"
 
 #define SIZE 16         //max size of communication between the master and the slave
 #define MAX_SIZE 4096   //max size of each message between the master and the slave

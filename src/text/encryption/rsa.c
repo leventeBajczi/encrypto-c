@@ -1,5 +1,6 @@
 #include "headers/rsa.h"
 
+char* password = "abcd";
 
 char* load_public_key()
 {
@@ -35,6 +36,7 @@ char* encrypt_rsa(char* key, char* content, int len)
     if (err) {
         printf("gcrypt: encryption failed");
     }
+
     void* rsa_buf = calloc(1, KEYLEN*3);
     int i =0,  j = 0;
     int slen = 0;
@@ -51,13 +53,94 @@ char* encrypt_rsa(char* key, char* content, int len)
             default: i=i*10 + ((char*)rsa_buf)[slen]-'0'; slen++; break;
         }
     }
-    free(content);
     return encode_base64(rsa_buf, slen);
 
 }
 void decrypt_rsa(char* content, int len)
 {
+    char* key = read_key("private.key");
 
+    if(!password);//decrypt_aes
+
+    gcry_sexp_t skey;
+    size_t length = (strlen(key))*3/4;
+
+    key = decode_base64(key);
+    decrypt_private(password, key, length);
+    int i = 0, j = 0, jump = 0;
+
+    while(i<length)
+    {
+        switch(key[i])
+        {
+            case '(': i++; j++; break;
+            case ')': 
+                i++;
+                j--; break;
+            case ':': i+=jump+1; jump = 0; break;
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9': jump=jump*10 + key[i]-'0'; i++; break;
+            default: if(j){
+                key[i] = ')';
+            } else length = i; break;
+        }
+    }
+
+    int err = gcry_sexp_new(&skey, (void*)key, length, 1);
+    if(err)
+    {
+        printf("couldn't build key");
+    }
+    gcry_sexp_t plain;
+    gcry_sexp_t ciph;
+
+    i = 0; j = 0; jump = 0;
+    while(i<len)
+    {
+        switch(content[i])
+        {
+            case '(': i++; j++; break;
+            case ')': 
+                i++;
+                j--; break;
+            case ':': i+=jump+1; jump = 0; break;
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9': jump=jump*10 + content[i]-'0'; i++; break;
+            default: if(j){
+                content[i] = ')';
+            } else len = i; break;
+        }
+    }
+
+
+    err = gcry_sexp_new(&ciph, (void*)content, len, 1);
+    if(err)
+    {
+        printf("Failed to build up content");
+        abort();
+    }
+    
+    err = gcry_pk_decrypt(&plain, ciph, skey);
+    if (err) {
+        printf("gcrypt: decryption failed");
+    }
+    
 }
 void generate_keypair()
 {
