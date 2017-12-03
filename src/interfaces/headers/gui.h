@@ -11,6 +11,6 @@
 void* gui(void*);
 void send_clicked();
 void* handler(void*);
-#define MAX_RESPONSE_SIZE 4096
+#include "../../defines.h"
 
 #endif

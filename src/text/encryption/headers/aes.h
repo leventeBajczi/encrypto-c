@@ -7,7 +7,7 @@
 #include "rsa.h"
 #include "randomdata.h"
 
-#define MODE 1      //from /dev/urandom, the safest one
+#include "../../../defines.h"
 
 void handle_aes_key(char* );
 char* get_aes_key();

@@ -16,11 +16,7 @@
 
 #include "../../text/headers/http.h"
 
-#define PORTNUM 1111
-#define MAX_ANSWER_SIZE 3584    //3.5kiB for the body
-#define MAX_RESPONSE_SIZE 4096  //4kiB for the entire message
-#define HEADER "HTTP/1.1 200 OK\nUser-agent: encrypto-0.1.0\nContent-Type: text/html\nContent-Length: "
-#define CONCURR_CLIENTS 5
+#include "../../defines.h"
 
 void s_handle_input(char*);
 void* server(void*);

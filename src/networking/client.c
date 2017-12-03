@@ -74,7 +74,7 @@ void handle_output(char* out)
 void handle_input(char* in)
 {
     in = get_http(in);
-    char value[MAX_ANSWER_SIZE], content[MAX_ANSWER_SIZE], key[KEYSIZE];
+    char value[MAX_ANSWER_SIZE], content[MAX_ANSWER_SIZE], key[MAX_ANSWER_SIZE];
     get_value(in, "type", value);
     if(strcmp(value, "message") == 0)
     {

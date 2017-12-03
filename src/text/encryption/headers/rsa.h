@@ -6,7 +6,7 @@
 #include "../../../file/headers/io.h"
 #include "../../headers/base64.h"
 #include "aes.h"
-#define KEYLEN 256
+#include "../../../defines.h"
 
 char* load_public_key();
 char* encrypt_rsa(char*, char*, int);

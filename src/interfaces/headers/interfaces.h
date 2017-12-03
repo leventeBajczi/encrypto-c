@@ -7,8 +7,7 @@
 #include "cli.h"
 #include "gui.h"
 void interfaces(char*);
+#include "../../defines.h"
 
-#define CLI_INTERFACE         "cli"
-#define GUI_INTERFACE         "gui"
 
 #endif

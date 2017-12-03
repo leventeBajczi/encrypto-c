@@ -7,8 +7,7 @@
 #include "server.h"
 #include "../../threads/headers/threads.h"
 
-#define CLIENT_MODE         "client"
-#define SERVER_MODE         "server"
+#include "../../defines.h"
 
 void networking(char*);
 void* router(void*);

@@ -6,9 +6,9 @@
 
 #include "../../threads/headers/threads.h"
 #include "../../misomosi/headers/misomosi.h"
+#include "../../defines.h"
 
 void* cli(void*);
 void* listener(void*);
-#define MAX_RESPONSE_SIZE 4096
 
 #endif
