@@ -14,7 +14,6 @@ char* directory;
 char* keyfiles;
 
 int running = 1;
-char* aes_key;
 
 int main(int argc, char** argv){
     int i = 0;

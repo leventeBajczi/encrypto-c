@@ -41,7 +41,9 @@ void write_pem(const char* type, char* data, const char* file)
     char * filename = (char*)malloc(sizeof(char)*(strlen(file)+strlen(keyfiles)+1));
     sprintf(filename, "%s/%s", keyfiles, file);
     f = fopen(filename, "w+");
+    fprintf(f,"-----BEGIN %s -----\n", type);
     fwrite(data, 1, strlen(data), f);
+    fprintf(f,"\n-----END %s -----\n", type);
     free(data);
     fclose(f);
     free(filename);

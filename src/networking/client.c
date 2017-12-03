@@ -9,8 +9,7 @@ extern char* name;
 
 extern int running;
 
-extern char* aes_key;
-
+extern gcry_cipher_hd_t aes_key;
 int counter = 0;
 
 int sock;
@@ -96,7 +95,7 @@ void handle_input(char* in)
             return;
         }
         get_value(in, "sender", value);
-        if(aes_key)
+        if(get_aes_key())
         {
             sprintf(in, "%s requested RSA public key", value);
             send_public_key();
@@ -159,8 +158,8 @@ void send_aes_key(char* key)
 {
     char json[MAX_RESPONSE_SIZE];
     char* aeskey = malloc(AES_KEYLEN);
-    memcpy(aeskey, aes_key, AES_KEYLEN);
-    encrypt_rsa(key, aeskey);
+    memcpy(aeskey, aes_key, sizeof(aes_key));
+    encrypt_rsa(key, aeskey, sizeof(aes_key));
     memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE);
     build_json(json, "type", "key negotiation");
     build_json(json, "sender", name);

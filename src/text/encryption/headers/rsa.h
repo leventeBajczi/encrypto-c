@@ -5,11 +5,12 @@
 #include <gcrypt.h>
 #include "../../../file/headers/io.h"
 #include "../../headers/base64.h"
+#include "aes.h"
 #define KEYLEN 256
 
 char* load_public_key();
-void encrypt_rsa(char*, char*);
-void decrypt_rsa(char*);
+void encrypt_rsa(char*, char*, int);
+void decrypt_rsa(char*, int);
 void generate_keypair();
 
 #endif
