@@ -72,3 +72,52 @@ encrypto [-m mode] [-c client] [-k keys] [-d directory] [-s server] [-n name] [-
     * Die standarde Port ist `0`, was bedeutet, dass die Kernel einen beliebigen Wert zuordnen wird in `server` Modus.
     * In `client` Modus muss diesen Wert spezifiert werden!
 
+## Beispiel für der Verwendung
+Eine Beispiel, der ermöglicht voll verschlüsselte Kommunikation für zwei Leute, die nur verschiedene LANs erreichen.
+
+### 1. Server
+1. Eine der Leuten hat eine LAN, der Port-forwarding erlaubt.
+    1. Port 50505 aus dem WAN nach Port 50505 von einem Maschine des LANs forwarden.
+    1. An diesem Maschine die folgende Schritte laufen lassen:
+        ```
+        git clone https://github.com/leventeBajczi/encrypto-c.git
+        cd encrypto-c
+        make clean
+        make install
+        mkdir log/
+        encrypto -m server -d log -p 50505
+        ```
+    1. Die Ausgangszeilen interpretieren:
+        ```
+        Info available on port 45317
+        Listening on port: 47709
+        ```
+    1. Die Programm, den Server und der Router (und Switch, usw...) laufen bleiben lassen.
+### 2. Client an dem gleichen LAN
+1.  An diesem Maschine die folgende Schritte laufen lassen:
+    ```
+    git clone https://github.com/leventeBajczi/encrypto-c.git
+    cd encrypto-c
+    make clean
+    make install
+    mkdir log
+    mkdir keys
+    encrypto -c gui -d log/ -p 50505 -k keys/ -n Name1 -s <lokales IP des Servers>
+    ```
+1. Der Terminal, in denen diese Schritte laufen gelassen wurden, fängt an Verschlüsselungsschlüsseln zu generieren. Für die sichere Speicherung des Private-Keys fragt die Applikation für einen Geheim, dessen Hash als Schlüssel benutzt wird.
+1. Nach der Angabe dieser Geheims startet eine GUI, und von diesen Punkt die Verwendung ist ganz trivial - oben kann man die Daten des Programmes sehen, und unten kann neue Messages schicken.
+### 3. Client nicht an dem gleichen LAN
+1.  An diesem Maschine die folgende Schritte laufen lassen:
+    ```
+    git clone https://github.com/leventeBajczi/encrypto-c.git
+    cd encrypto-c
+    make clean
+    make install
+    mkdir log
+    mkdir keys
+    encrypto -c gui -d log/ -p 50505 -k keys/ -n Name1 -s <öffene IP des Routers von dem Server>
+    ```
+1. Der Terminal, in denen diese Schritte laufen gelassen wurden, fängt an Verschlüsselungsschlüsseln zu generieren. Für die sichere Speicherung des Private-Keys fragt die Applikation für einen Geheim, dessen Hash als Schlüssel benutzt wird.
+1. Nach der Angabe dieser Geheims startet eine GUI, und von diesen Punkt die Verwendung ist ganz trivial - oben kann man die Daten des Programmes sehen, und unten kann neue Messages schicken.
+### 4. Beide Clients
+1. Nach Schlüsselaustausch fangen die Clients an, Messages zu schicken. Diese Messages sind verschlüsselt mit AES256 - die öffene Daten kann man auf der Seite [http://serverip:infoport]() checken - natürlich nur der Client am gleichen LAN sieht diese Information normalerweise - eine neues Port braucht geforwardiert werden, um die Andere Sichtbarkeit zu ermöglichen.
