@@ -1,11 +1,13 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
+#define VERSION "1.0.0-alpha"
+
 
 #define LOGFILE "html_log.table"
 #define HTML_BEGIN "<html><head><title>Info</title></head><body><table tyle=\"width:100%%\"><tr><th>Type</th><th>Client</th><th>message</th></tr>"
 #define HTML_END   "</table></body></html>"
-#define HEADER "HTTP/1.1 200 OK\nUser-agent: encrypto-0.1.0\nContent-Type: text/html\nContent-Length: "
+#define HEADER "HTTP/1.1 200 OK\nUser-agent: encrypto-" VERSION "\nContent-Type: text/html\nContent-Length: "
 #define KEYLEN 256
 #define MAX_RESPONSE_SIZE MAX_SIZE
 
@@ -35,7 +37,6 @@
 #define MAX_SIZE 4096   //max size of each message between the master and the slave
 
 #define MAX_ANSWER_SIZE 3584    //3.5kiB for the body
-#define HEADER "HTTP/1.1 200 OK\nUser-agent: encrypto-0.1.0\nContent-Type: text/html\nContent-Length: "
 #define AES_KEYLEN 32
 #define CONNECTION_CONNECTED "Connected"
 #define CONCURR_CLIENTS 5
