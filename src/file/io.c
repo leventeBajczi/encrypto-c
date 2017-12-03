@@ -38,13 +38,34 @@ char* load_log()
 void write_pem(const char* type, char* data, const char* file)
 {
     FILE *f;
-    char * filename = (char*)malloc(sizeof(char)*(strlen(file)+strlen(keyfiles)+1));
+    char * filename = (char*)malloc(sizeof(char)*(strlen(file)+strlen(keyfiles)+2));
     sprintf(filename, "%s/%s", keyfiles, file);
     f = fopen(filename, "w+");
     fprintf(f,"-----BEGIN %s -----\n", type);
     fwrite(data, 1, strlen(data), f);
-    fprintf(f,"\n-----END %s -----\n", type);
+    fprintf(f,"\n-----END %s -----", type);
     free(data);
     fclose(f);
     free(filename);
+}
+
+char* read_key(char* file)
+{
+    FILE *f;
+    char * filename = (char*)malloc(sizeof(char)*(strlen(file)+strlen(keyfiles)+2));
+    sprintf(filename, "%s/%s", keyfiles, file);
+    f = fopen(filename, "r+");
+    char* contents = (char*)malloc(sizeof(char)*KEYLEN*3);
+    int i = 0;
+    int lastlf;
+    while(fgetc(f) != '\n');
+    while((contents[i] = fgetc(f)) != EOF){
+        if(contents[i] == '\n')lastlf = i;
+        i++;
+    }
+    contents[lastlf] = 0;
+    fclose(f);
+    free(filename);
+
+    return contents;
 }

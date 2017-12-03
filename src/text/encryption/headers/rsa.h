@@ -9,7 +9,7 @@
 #define KEYLEN 256
 
 char* load_public_key();
-void encrypt_rsa(char*, char*, int);
+char* encrypt_rsa(char*, char*, int);
 void decrypt_rsa(char*, int);
 void generate_keypair();
 

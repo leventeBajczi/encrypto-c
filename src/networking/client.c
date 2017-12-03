@@ -57,6 +57,7 @@ void* c_callback(void* params)
 
 void handle_output(char* out)
 {
+    if(strlen(out)==1 && out[0] == '\n')return;
     char json[MAX_RESPONSE_SIZE];
     memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE);
     build_json(json, "type", "message");
@@ -90,7 +91,7 @@ void handle_input(char* in)
     }
     else if(strcmp(value, "key request")==0)
     {   
-        if(counter){
+        if(!counter){
             counter++;      //We get one from ourselves, ignore that
             return;
         }
@@ -159,7 +160,7 @@ void send_aes_key(char* key)
     char json[MAX_RESPONSE_SIZE];
     char* aeskey = malloc(AES_KEYLEN);
     memcpy(aeskey, aes_key, sizeof(aes_key));
-    encrypt_rsa(key, aeskey, sizeof(aes_key));
+    aeskey = encrypt_rsa(key, aeskey, sizeof(aes_key));
     memset(json, 0, sizeof(char)*MAX_RESPONSE_SIZE);
     build_json(json, "type", "key negotiation");
     build_json(json, "sender", name);

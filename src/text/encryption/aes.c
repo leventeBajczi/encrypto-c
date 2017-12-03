@@ -10,11 +10,11 @@ void handle_aes_key(char* key)
 }
 char* get_aes_key()
 {
-
+    return encode_base64(&aes_key, sizeof(aes_key));
 }
 void encrypt_aes(char* content)
 {
-    int err = gcry_cipher_encrypt(aes_key, (unsigned char*) *content, strlen(content), NULL, 0);
+    int err = gcry_cipher_encrypt(aes_key, (unsigned char*) content, strlen(content), NULL, 0);
     if (err) {
         printf("gcrypt: could not encrypt with AES");
         abort();
@@ -22,7 +22,7 @@ void encrypt_aes(char* content)
 }
 void decrypt_aes(char* content)
 {
-    int err = gcry_cipher_decrypt(aes_key, (unsigned char*) *content, strlen(content), NULL, 0);
+    int err = gcry_cipher_decrypt(aes_key, (unsigned char*) content, strlen(content), NULL, 0);
     if (err) {
         printf("gcrypt: could not decrypt with AES");
         abort();

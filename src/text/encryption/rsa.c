@@ -3,10 +3,56 @@
 
 char* load_public_key()
 {
-    
+    return read_key("public.key"); 
 }
-void encrypt_rsa(char* key, char* content, int len)
+char* encrypt_rsa(char* key, char* content, int len)
 {
+    gcry_sexp_t enkey;
+    size_t length = strchr(key, '=') ? (strchr(key, '=') - key)*3/4 : strlen(key)*3/4;
+    int err = gcry_sexp_new (&enkey, (void*)decode_base64(key), length, 1);
+    if(err)
+    {
+        printf("Failed to build up key");
+        abort();
+    }
+    gcry_mpi_t msg;
+    gcry_sexp_t data;   
+
+    err = gcry_mpi_scan(&msg, GCRYMPI_FMT_USG, content, len, NULL);
+    if (err) {
+        printf("failed to create a mpi from the message");
+        abort();
+    }
+    err = gcry_sexp_build(&data, NULL,"(data (flags raw) (value %m))", msg);
+
+    if (err) {
+        printf("failed to create a sexp from the message");
+        abort();
+    }
+
+    gcry_sexp_t ciph;
+    err = gcry_pk_encrypt(&ciph, data, enkey);
+    if (err) {
+        printf("gcrypt: encryption failed");
+    }
+    void* rsa_buf = calloc(1, KEYLEN*3);
+    int i =0,  j = 0;
+    int slen = 0;
+    gcry_sexp_sprint(ciph, GCRYSEXP_FMT_CANON, rsa_buf, KEYLEN*3);
+    while(j || !slen)
+    {
+        switch(((char*)rsa_buf)[slen])
+        {
+            case '(': slen++; j++; break;
+            case ')': 
+                slen++;
+                j--; break;
+            case ':': slen+=i+1; i = 0; break;
+            default: i=i*10 + ((char*)rsa_buf)[slen]-'0'; slen++; break;
+        }
+    }
+    free(content);
+    return encode_base64(rsa_buf, slen);
 
 }
 void decrypt_rsa(char* content, int len)
@@ -19,10 +65,11 @@ void generate_keypair()
     gcry_sexp_t rsa_parms;
     gcry_sexp_t rsa_keypair;
     gcry_sexp_t rsa_data; 
+    char init[50];
 
     printf("Generating a new keypair, please hold still....\n");
-    
-    err = gcry_sexp_build(&rsa_parms, NULL, "(genkey (rsa (nbits 4:2048)))");
+    sprintf(init, "(genkey (rsa (nbits 5:%5d)))", 8*KEYLEN);
+    err = gcry_sexp_build(&rsa_parms, NULL, init);
     if (err) {
         printf("gcrypt: failed to create rsa params");
         abort();
@@ -54,7 +101,7 @@ void generate_keypair()
             default: i=i*10 + ((char*)rsa_buf)[len]-'0'; len++; break;
         }
     }
-    encrypt_private(&rsa_buf, len);
+    encrypt_private((char**)&rsa_buf, len);
     char *priv = encode_base64(rsa_buf, len);
     free(rsa_buf);
     write_pem("PRIVATE KEY", priv, "private.key");  
@@ -83,4 +130,6 @@ void generate_keypair()
 
     gcry_sexp_release(rsa_keypair);
     gcry_sexp_release(rsa_parms);
+
+    printf("Successful key generation, continuing... \n");
 }
