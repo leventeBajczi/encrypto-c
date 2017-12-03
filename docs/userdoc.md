@@ -115,7 +115,7 @@ Eine Beispiel, der ermöglicht voll verschlüsselte Kommunikation für zwei Leut
     make install
     mkdir log
     mkdir keys
-    encrypto -c gui -d log/ -p 50505 -k keys/ -n Name1 -s <öffene IP des Routers von dem Server>
+    encrypto -c gui -d log/ -p 50505 -k keys/ -n Name2 -s <öffene IP des Routers von dem Server>
     ```
 1. Der Terminal, in denen diese Schritte laufen gelassen wurden, fängt an Verschlüsselungsschlüsseln zu generieren. Für die sichere Speicherung des Private-Keys fragt die Applikation für einen Geheim, dessen Hash als Schlüssel benutzt wird.
 1. Nach der Angabe dieser Geheims startet eine GUI, und von diesen Punkt die Verwendung ist ganz trivial - oben kann man die Daten des Programmes sehen, und unten kann neue Messages schicken.
