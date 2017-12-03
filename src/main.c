@@ -59,7 +59,7 @@ int main(int argc, char** argv){
     return start(mode, client, keyfiles, directory);
 }
 
-int start(char* mode, char* client, char* keyfiles, char* directory){
+int start(char* mode, char* client){
     allocate_str_array(&n_mosi, SIZE, MAX_SIZE);
     allocate_str_array(&n_miso, SIZE, MAX_SIZE);
     allocate_str_array(&i_mosi, SIZE, MAX_SIZE);

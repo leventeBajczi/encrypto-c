@@ -12,5 +12,5 @@
 
 #include "defines.h"
 void sigint_handler();
-int start(char*, char*, char*, char*);
+int start(char*, char*);
 #endif
