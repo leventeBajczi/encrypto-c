@@ -56,7 +56,7 @@ int main(int argc, char** argv){
             return -1;
         }
     }
-    return start(mode, client, keyfiles, directory);
+    return start(mode, client);
 }
 
 int start(char* mode, char* client){

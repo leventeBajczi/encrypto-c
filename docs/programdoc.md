@@ -54,3 +54,34 @@ Diese ist die "Settings" file des Programmes. Jede #define Direktiv ist hier ang
     
     Sehr ähnlic zu server, aber:
     1. void handle_input(char* in) - parsieren den einkommenden Daten - message, status, key request, key response, key negotiation -> entsprechende Hilfsfunktionen, sehr trivial (sehen Sie den Grafikonen unten).
+### **text** - für Textmanipulation
+
+
+Jede file kann auch als eine Library benutzt werden.
+1. **encryption**
+    1. **aes.c**
+        1. void handle_aes_key(char* key) - Diese verarbeitet den Session-Key, den unsere Partner uns gesendet hat - eine globale `aes-key` wird dafür verwendet.
+        1. char* get_aes_key() - Diese gibt den Key (oben gespeichert) zurück.
+        1. void encrypt_aes(char** content) - Eine string verschlüsseln mit dem oben gespeicherten Key.
+        1. void encrypt_private(char** rsa, int len) - Den private-key mit dem Hash eines freigewählten Passwords mit AES256 verschlüsseln.
+        1. void decrypt_private(char* passwd, char* rsa, int len) - Den verschlüsselten private-key zurückbekommen
+        1. void generate_aes() - abhängig von den `#define MODE` generiert eine Verschlüsselungsschlüssel für AES256, und macht den Handler daraus auch.
+    1. **randomdata.c** - enthielt die 3 verschieden Weisen von Randomzahlgenerierung - /dev/random /dev/urandom, und RDRAND. Für diese letzte eine Assembly Funtkion benutzt, diese steht hier:
+        ```
+        rdrand:
+        RDRAND %ax
+        JNC rdrand
+
+        ret
+        ```
+    1. **rsa.c**
+        1. char* load_public_key() - Ladet den public key aus dem File ein.
+        1. char* encrypt_rsa(char* key, char* content, int len) - Gibt den verschlüsselten Wert des Contents zurück.
+        1. void decrypt_rsa(char* content, int len) - Decryptiert den Content mit dem eigenen Private-Key des Benutzers
+        1. void generate_keypair() - eine neue Keypair generieren
+1. **base64**
+    1. char* encode_base64(uint8_t* str, int len) - die enkodierte Representation des Striges zurückgeben (mit Hilfe von char to_base64_char(uint8_t c))
+    1. uint8_t* decode_base64(char* base64) - die dekodierte String des Base64-Representations zurückgeben (mit Hilfe von )uint8_t get_char(char c).
+1. **http.c**
+    1. void build_http(char* header, char* content) - Content zum Header hinfügen.
+    1. char* get_http(char* str) - Content aus einem HTTP-Struktur
