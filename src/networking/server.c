@@ -45,22 +45,21 @@ void* host_info(void* params)
     char msg[MAX_ANSWER_SIZE];
     char* page;
   
-    struct sockaddr_in dest; /* socket info about the machine connecting to us */
-    struct sockaddr_in serv; /* socket info about our server */
-    int mysocket;            /* socket used to listen for incoming connections */
+    struct sockaddr_in dest; 
+    struct sockaddr_in serv; 
+    int mysocket;            
     socklen_t socksize = sizeof(struct sockaddr_in);
 
-    memset(&serv, 0, sizeof(serv));           /* zero the struct before filling the fields */
-    serv.sin_family = AF_INET;                /* set the type of connection to TCP/IP */
-    serv.sin_addr.s_addr = htonl(INADDR_ANY); /* set our address to any interface */
-    serv.sin_port = htons(0);           /* set the server port number */    
+    memset(&serv, 0, sizeof(serv));           
+    serv.sin_family = AF_INET;                
+    serv.sin_addr.s_addr = htonl(INADDR_ANY);
+    serv.sin_port = htons(0);           
 
     mysocket = socket(AF_INET, SOCK_STREAM, 0);
   
-    /* bind serv information to mysocket */
+    
     bind(mysocket, (struct sockaddr *)&serv, sizeof(struct sockaddr));
 
-    /* start listening, allowing a queue of up to 1 pending connection */
     listen(mysocket, 1);
     getsockname(mysocket,(struct sockaddr *)&serv , &socksize); 
     sprintf(msg, "Info available on port %d", ntohs(serv.sin_port));  
