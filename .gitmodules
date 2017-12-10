@@ -1,0 +1,3 @@
+[submodule "src/text"]
+	path = src/text
+	url = https://github.com/leventeBajczi/text.git
