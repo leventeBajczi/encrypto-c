@@ -1,20 +1,12 @@
-encrypto:   src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c src/*/*/*/*.h src/*/*/*/*.s
-			gcc -c src/*/*/*/*.s
-			gcc src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c src/*/*/*/*.h *.o -o build/encrypto -lpthread `pkg-config --cflags --libs gtk+-3.0` -lgcrypt
-			rm *.o
-			
-gdb:		src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c src/*/*/*/*.h src/*/*/*/*.s
-			gcc -c src/*/*/*/*.s -g
-			gcc src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c src/*/*/*/*.h *.o -g -o build/encrypto-gdb -lpthread `pkg-config --cflags --libs gtk+-3.0` -lgcrypt
+encrypto:   src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c
+			$(MAKE) -C src/text/
+			mkdir build
+			gcc -Isrc/text src/*.c src/*.h src/threads/*.c src/networking/*.c src/misomosi/*.c src/interfaces/*.c src/file/*.c src/*/*/*.h src/*/*/*.c src/text/build/libtext.a -o build/encrypto -lpthread `pkg-config --cflags --libs gtk+-3.0` -lgcrypt
+
+gdb:		src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c
+			$(MAKE) -C src/text/
+			gcc -g -Isrc/text src/*.c src/*.h src/threads/*.c src/networking/*.c src/misomosi/*.c src/interfaces/*.c src/file/*.c src/*/*/*.h src/*/*/*.c src/text/build/libtext.a -o build/encrypto-gdb -lpthread `pkg-config --cflags --libs gtk+-3.0` -lgcrypt
 			gdb build/encrypto-gdb
-			rm *.o
-server: 	src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c src/*/*/*/*.h src/*/*/*/*.s
-			gcc -c src/*/*/*/*.s
-			gcc src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c src/*/*/*/*.h *.o -o build/encrypto-server -lpthread `pkg-config --cflags --libs gtk+-3.0` -lgcrypt
-			rm *.o
-			build/encrypto-server -m server
-install:	src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c src/*/*/*/*.h src/*/*/*/*.s
-			gcc -c src/*/*/*/*.s
-			gcc src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c src/*/*/*/*.h *.o -o build/encrypto -lpthread `pkg-config --cflags --libs gtk+-3.0` -lgcrypt
-			rm *.o
-			sudo cp build/encrypto /usr/bin/encrypto
+
+clean:		
+			rm -rf build messages keyfiles *.o *.bin

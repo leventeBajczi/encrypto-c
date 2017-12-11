@@ -14,7 +14,13 @@ void networking(char* param)
         create_thread(host_info, NULL);
     }
     else {
-        generate_keypair();
+        char* private_key = NULL;
+        char* public_key = NULL;
+        int priv_len;
+        int publ_len;
+        generate_keypair(KEYLEN, &private_key, &priv_len, &public_key, &publ_len);
+        write_pem("ENCRYPTED PRIVATE KEY", encode_base64(private_key, priv_len), "private.key");
+        write_pem("NON-ENCRYPTED PUBLIC KEY", encode_base64(public_key, publ_len), "public.key");
         create_thread(client, NULL);
 
     }

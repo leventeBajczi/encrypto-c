@@ -12,10 +12,7 @@
 
 #include "../../misomosi/headers/misomosi.h"
 #include "../../threads/headers/threads.h"
-#include "../../text/headers/http.h"
-#include "../../text/headers/json.h"
-#include "../../text/encryption/headers/aes.h"
-#include "../../text/encryption/headers/rsa.h"
+#include "../../text/libtext.h"
 #include "../../defines.h"
 
 void handle_input(char*);

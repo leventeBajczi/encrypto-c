@@ -14,7 +14,7 @@
 #include "../../threads/headers/threads.h"
 #include "../../file/headers/io.h"
 
-#include "../../text/headers/http.h"
+#include "../../text/libtext.h"
 
 #include "../../defines.h"
 

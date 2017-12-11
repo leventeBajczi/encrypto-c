@@ -3,8 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../text/headers/json.h"
-#include "../../text/headers/base64.h"
+#include "../../text/libtext.h"
 #include "../../defines.h"
 
 
