@@ -10,3 +10,7 @@ gdb:		src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c
 
 clean:		
 			rm -rf build messages keyfiles *.o *.bin
+
+install:
+			$(MAKE)
+			sudo -E cp build/encrypto /usr/bin/
