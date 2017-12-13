@@ -1,5 +1,6 @@
 encrypto:   src/*.c src/*.h src/*/*.c src/*/*/*.h src/*/*/*.c
 			$(MAKE) -C src/text/
+			rm -rf build/
 			mkdir build
 			gcc -Isrc/text src/*.c src/*.h src/threads/*.c src/networking/*.c src/misomosi/*.c src/interfaces/*.c src/file/*.c src/*/*/*.h src/*/*/*.c src/text/build/libtext.a -o build/encrypto -lpthread `pkg-config --cflags --libs gtk+-3.0` -lgcrypt
 
