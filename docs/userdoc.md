@@ -10,9 +10,8 @@ Eine verschlüsselte Messenger-Applikation die Simplizität und Sicherheit zusam
 ## Installation
 Um die Applikation zu installieren braucht man die source:
 ```
-git clone https://github.com/leventeBajczi/encrypto-c.git
+git clone https://github.com/leventeBajczi/encrypto-c.git --recursive
 cd encrypto-c
-make clean
 ```
 Es gibt mehrere Möglichkeiten von hier an:
 
@@ -21,11 +20,6 @@ Es gibt mehrere Möglichkeiten von hier an:
     make encrypto
     ``` 
     Nach der Kompilierung kann eine neue Datei heißt `encrypto` in der `build` Folder gefunden werden.
-* Nur in diesem Folder die binäre Dateien herstellen, und eine Server-Einheit laufen lassen: 
-    ```
-    make server
-    ``` 
-    Nach der Kompilierung kann eine neue Datei heißt `encrypto-server` in der `build` Folder gefunden werden, der auch laufen gelassen wird.
 * Binäre Datei auch in /usr/bin/ herstellen, damit die Applikation systemweit benutzbar wird: 
     ```
     make install
