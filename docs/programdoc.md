@@ -2,8 +2,6 @@
 Programmer's guide
 ## Allgeimeine Aufbau
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/acCzIUE8qwc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
 Die Code des Applikations ist in logische Einheiten (und anhand diesen Foldern) verteilt. Für jede *.c File gehört eine *.h File mit gleichem Name, die die Include-Sachen enthalten, und die Funktionen des Files deklarieren. Außer diesen Foldern findet man nur drei Dateien:
 ### main (.c und .h)
 Diese beschreiben die Anfangspunkt des Applikations. Aus dem Terminal die CLI-parametern werden zuerst in einem Datenstruktur (viele char* -s) eingeladet. Einige müssen aus Äußerem erreichbar sein, diese sind globale Variablen (und später mit Keyword `extern` erreicht), andere brauchen wir nur Lokal. 
